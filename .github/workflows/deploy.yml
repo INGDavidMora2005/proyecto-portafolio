@@ -1,0 +1,65 @@
+name: "CI/CD"
+
+# Actividad académica sobre integración continua: el workflow compila y prueba
+# el portafolio; el despliegue se agrega en una fase posterior.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Evita ejecuciones duplicadas del mismo ref mientras una anterior sigue corriendo.
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build y pruebas
+    runs-on: ubuntu-latest
+
+    steps:
+      # Descarga el código del repositorio.
+      - name: Checkout del repositorio
+        uses: actions/checkout@v7
+
+      # Instala Node.js 24 con caché de dependencias de npm.
+      - name: Configurar Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      # Instala las dependencias del proyecto.
+      - name: Instalar dependencias
+        run: npm ci
+
+      # Ejecuta la suite de pruebas unitarias.
+      - name: Ejecutar pruebas
+        run: npm test -- --no-watch
+
+      # Compila el proyecto en modo producción con el base href de GitHub Pages.
+      - name: Compilar proyecto
+        run: npm run build -- --base-href /proyecto-portafolio/
+
+      # El fallback 404 del sitio se sirve desde index.html en GitHub Pages.
+      - name: Copiar index.html a 404.html
+        run: cp dist/proyecto-portafolio/browser/index.html dist/proyecto-portafolio/browser/404.html
+
+      # El build falla si no existe el 404.html o si el base href no está correcto.
+      - name: Validar artefactos del build
+        run: |
+          if [ ! -f dist/proyecto-portafolio/browser/404.html ]; then
+            echo "::error::No se encontró el archivo 404.html en dist/proyecto-portafolio/browser/"
+            exit 1
+          fi
+
+          if ! grep -q "/proyecto-portafolio/" dist/proyecto-portafolio/browser/index.html; then
+            echo "::error::El index.html no contiene el base href /proyecto-portafolio/"
+            exit 1
+          fi
