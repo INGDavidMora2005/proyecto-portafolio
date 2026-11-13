@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { routes } from './app.routes';
+import { PERFIL } from './data/profile';
 
 describe('rutas', () => {
   beforeEach(() => {
@@ -15,7 +16,7 @@ describe('rutas', () => {
   it('renderiza la página de inicio', async () => {
     const harness = await RouterTestingHarness.create('/');
 
-    expect(harness.routeNativeElement?.querySelector('h1')?.textContent).toContain('Inicio');
+    expect(harness.routeNativeElement?.querySelector('h1')?.textContent).toContain(PERFIL.nombre);
   });
 
   it('renderiza la página de perfil', async () => {
