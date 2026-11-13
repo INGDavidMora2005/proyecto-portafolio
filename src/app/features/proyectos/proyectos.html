@@ -1,9 +1,50 @@
-<section class="page">
-  <header class="page-head">
-    <h1 class="page-title">Proyectos</h1>
-    <span class="page-index" aria-hidden="true">03</span>
-  </header>
-  <p class="page-lead">
-    Catálogo de los cinco proyectos, con repositorio y demo. Contenido en preparación.
-  </p>
+<section class="catalog" aria-labelledby="proyectos-title">
+  <app-section-header
+    headingId="proyectos-title"
+    index="03"
+    title="Proyectos"
+    description="Cinco proyectos con su repositorio, las tecnologías empleadas y una ficha con sus características principales."
+    [level]="1"
+  />
+
+  <div class="catalog__toolbar">
+    <p class="catalog__count" role="status" aria-live="polite">
+      {{ visibles().length }} de {{ total() }} proyectos
+    </p>
+
+    <div class="catalog__filters" role="group" aria-label="Filtrar proyectos por categoría">
+      @for (item of filtros(); track item.id) {
+        <button
+          type="button"
+          class="catalog__filter"
+          [attr.aria-pressed]="filtro() === item.id"
+          (click)="filtrar(item.id)"
+        >
+          {{ item.etiqueta }}
+          <span class="catalog__filter-count" aria-hidden="true">{{ item.total }}</span>
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (visibles().length > 0) {
+    <ul class="catalog__grid" role="list">
+      @for (proyecto of visibles(); track proyecto.id) {
+        <li class="catalog__item">
+          <app-project-card [project]="proyecto" />
+        </li>
+      }
+    </ul>
+  } @else {
+    <div class="catalog__empty">
+      <p class="catalog__empty-code" aria-hidden="true">00</p>
+      <p class="catalog__empty-title">No hay proyectos en esta categoría.</p>
+      <p class="catalog__empty-text">
+        Prueba con otra categoría o vuelve a ver el catálogo completo.
+      </p>
+      <button type="button" class="catalog__reset" (click)="filtrar('todos')">
+        Ver todos los proyectos
+      </button>
+    </div>
+  }
 </section>
