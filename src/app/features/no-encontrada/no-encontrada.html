@@ -1,8 +1,25 @@
-<section class="page">
-  <header class="page-head">
-    <h1 class="page-title">Página no encontrada</h1>
-    <span class="page-index" aria-hidden="true">404</span>
-  </header>
-  <p class="page-lead">La ruta que buscas no existe o cambió de dirección.</p>
-  <a class="page-link" routerLink="/">Volver al inicio</a>
+<section class="missing" aria-labelledby="no-encontrada-title">
+  <p class="missing__kicker">
+    <span aria-hidden="true">Error</span>
+    <span class="missing__code" aria-hidden="true">404</span>
+    <span>Ruta no encontrada</span>
+  </p>
+
+  <div class="missing__body">
+    <p class="missing__number" aria-hidden="true">
+      <span>4</span><span class="missing__zero">0</span><span>4</span>
+    </p>
+
+    <div class="missing__content">
+      <h1 id="no-encontrada-title" class="missing__title">Página no encontrada</h1>
+      <p class="missing__text">
+        La dirección que buscas no existe o cambió de lugar. Puedes volver al inicio o revisar el
+        catálogo de proyectos.
+      </p>
+      <div class="missing__actions">
+        <a class="missing__action missing__action--primary" routerLink="/">Volver al inicio</a>
+        <a class="missing__action" routerLink="/proyectos">Ver proyectos</a>
+      </div>
+    </div>
+  </div>
 </section>

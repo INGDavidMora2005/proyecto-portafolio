@@ -1,7 +1,50 @@
-<section class="page">
-  <header class="page-head">
-    <h1 class="page-title">Contacto</h1>
-    <span class="page-index" aria-hidden="true">05</span>
-  </header>
-  <p class="page-lead">Canales de contacto. Contenido en preparación.</p>
+<section class="contact" aria-labelledby="contacto-title">
+  <app-section-header
+    headingId="contacto-title"
+    index="04"
+    title="Contacto"
+    description="Elige el canal que prefieras. No hay formulario ni servidor: el correo se abre en tu cliente o se copia al portapapeles."
+    [level]="1"
+  />
+
+  <!-- Sitio estático sin backend: se ofrecen canales directos en lugar de un formulario de envío. -->
+  <ul class="channels" role="list">
+    @for (canal of canales; track canal.id) {
+      <li class="channel">
+        <div class="channel__head">
+          <h2 class="channel__label">{{ canal.etiqueta }}</h2>
+          <span class="channel__index" aria-hidden="true">04.{{ $index + 1 }}</span>
+        </div>
+
+        <p class="channel__value">{{ canal.valor }}</p>
+
+        <div class="channel__actions">
+          @if (canal.tipo === 'correo') {
+            <a class="channel__action" [href]="canal.url">Escribir correo</a>
+            <button
+              type="button"
+              class="channel__action channel__action--copy"
+              (click)="copiarCorreo()"
+            >
+              Copiar correo
+            </button>
+          } @else {
+            <a class="channel__action" [href]="canal.url" target="_blank" rel="noopener noreferrer">
+              Abrir {{ canal.etiqueta }}
+              <span class="visually-hidden"> (se abre en una pestaña nueva)</span>
+            </a>
+          }
+        </div>
+      </li>
+    }
+  </ul>
+
+  <p
+    class="contact__status"
+    role="status"
+    aria-live="polite"
+    [class.contact__status--error]="estado() === 'error'"
+  >
+    {{ estadoTexto() }}
+  </p>
 </section>
