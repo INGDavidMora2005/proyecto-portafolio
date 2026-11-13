@@ -1,0 +1,9 @@
+<header class="section-header">
+  <span class="section-header__index" aria-hidden="true">{{ index() }}</span>
+  <div class="section-header__body">
+    <h2 class="section-header__title" [id]="headingId()">{{ title() }}</h2>
+    @if (description(); as texto) {
+      <p class="section-header__description">{{ texto }}</p>
+    }
+  </div>
+</header>
