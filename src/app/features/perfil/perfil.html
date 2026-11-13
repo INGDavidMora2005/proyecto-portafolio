@@ -1,7 +1,85 @@
-<section class="page">
+<section class="page profile">
   <header class="page-head">
     <h1 class="page-title">Perfil</h1>
     <span class="page-index" aria-hidden="true">02</span>
   </header>
-  <p class="page-lead">Perfil profesional, habilidades y tecnologías. Contenido en preparación.</p>
+
+  <div class="identity">
+    <div class="identity__monogram" aria-hidden="true">
+      <span class="identity__monogram-text">DM</span>
+    </div>
+    <div class="identity__body">
+      <p class="identity__name">{{ perfil.nombre }}</p>
+      <p class="identity__role">{{ perfil.titular }}</p>
+      <dl class="identity__facts">
+        @for (dato of perfil.datosClave; track dato.etiqueta) {
+          <div class="identity__fact">
+            <dt>{{ dato.etiqueta }}</dt>
+            <dd>{{ dato.valor }}</dd>
+          </div>
+        }
+      </dl>
+    </div>
+  </div>
+
+  <section class="profile__block" aria-labelledby="presentacion-title">
+    <app-section-header headingId="presentacion-title" index="02.1" title="Presentación" />
+    <div class="prose">
+      @for (parrafo of perfil.presentacion; track $index) {
+        <p>{{ parrafo }}</p>
+      }
+    </div>
+  </section>
+
+  <section class="profile__block" aria-labelledby="habilidades-title">
+    <app-section-header
+      headingId="habilidades-title"
+      index="02.2"
+      title="Habilidades"
+      description="Tecnologías y prácticas con las que construyo y despliego aplicaciones."
+    />
+    <div class="skills">
+      @for (grupo of perfil.habilidades; track grupo.id) {
+        <article class="skill-card">
+          <h3 class="skill-card__title">{{ grupo.titulo }}</h3>
+          <ul class="skill-card__chips">
+            @for (elemento of grupo.elementos; track elemento) {
+              <li><app-tech-chip [label]="elemento" /></li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+  </section>
+
+  <div class="profile__split">
+    <section class="profile__block" aria-labelledby="idiomas-title">
+      <app-section-header headingId="idiomas-title" index="02.3" title="Idiomas" />
+      <dl class="languages">
+        @for (idioma of perfil.idiomas; track idioma.nombre) {
+          <div class="language">
+            <dt>{{ idioma.nombre }}</dt>
+            <dd>{{ idioma.nivel }}</dd>
+          </div>
+        }
+      </dl>
+    </section>
+
+    <section class="profile__block" aria-labelledby="principios-title">
+      <app-section-header headingId="principios-title" index="02.4" title="Cómo trabajo" />
+      <ul class="principles">
+        @for (principio of perfil.principios; track principio.titulo) {
+          <li class="principle">
+            <h3 class="principle__title">{{ principio.titulo }}</h3>
+            <p class="principle__text">{{ principio.descripcion }}</p>
+          </li>
+        }
+      </ul>
+    </section>
+  </div>
+
+  <div class="profile__cta">
+    <a class="cta-link cta-link--primary" routerLink="/proyectos">Ver proyectos</a>
+    <a class="cta-link cta-link--ghost" routerLink="/contacto">Contacto</a>
+  </div>
 </section>
