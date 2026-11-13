@@ -111,7 +111,7 @@ jobs:
           INTENTO=1
           CODIGO=000
           while [ "$INTENTO" -le "$MAX" ]; do
-            CODIGO=$(curl --silent --show-error --output "$RUNNER_TEMP/index-base.html" --write-out "%{http_code}" "$URL")
+            CODIGO=$(curl --silent --show-error --output "$RUNNER_TEMP/index-base.html" --write-out "%{http_code}" "$URL/")
             if [ "$CODIGO" = "200" ]; then
               break
             fi
@@ -122,7 +122,7 @@ jobs:
           done
 
           if [ "$CODIGO" != "200" ]; then
-            echo "::error::La URL base ${URL} respondió ${CODIGO} después de $MAX intentos. No se pudo verificar el despliegue."
+            echo "::error::La URL base ${URL}/ respondió ${CODIGO} después de $MAX intentos. No se pudo verificar el despliegue."
             exit 1
           fi
 
@@ -152,7 +152,7 @@ jobs:
           {
             echo "### Verificación del despliegue en GitHub Pages"
             echo ""
-            echo "- URL publicada: \`${URL}\`"
+            echo "- URL publicada: \`${URL}/\`"
             echo "- URL base: respuesta HTTP ${CODIGO}; contiene \`<app-root\`: OK"
             echo "- Bundle principal (\`${BUNDLE}\`): respuesta HTTP ${BUNDLE_CODE}; esperado 200: OK"
             echo "- Ruta profunda /perfil: respuesta HTTP ${PERFIL_CODE}; contiene \`<app-root\`: ${PERFIL_OK}"
