@@ -1,9 +1,79 @@
-<section class="page">
-  <header class="page-head">
-    <h1 class="page-title">Inicio</h1>
-    <span class="page-index" aria-hidden="true">01</span>
+<section class="home" aria-labelledby="inicio-title">
+  <header class="hero">
+    <div class="hero__body">
+      <p class="hero__kicker">
+        <span class="hero__index" aria-hidden="true">01</span>
+        <span>Portafolio · Hoja de perfil</span>
+      </p>
+      <h1 id="inicio-title" class="hero__title">{{ perfil.nombre }}</h1>
+      <p class="hero__role">{{ perfil.titular }}</p>
+      <p class="hero__lead">{{ presentacion }}</p>
+      <div class="hero__actions">
+        <a class="action action--primary" routerLink="/proyectos">Ver proyectos</a>
+        <a class="action" routerLink="/perfil">Conocer mi perfil</a>
+      </div>
+    </div>
+
+    <aside class="stamp" aria-label="Datos del perfil">
+      <p class="stamp__monogram" aria-hidden="true">DM</p>
+      <dl class="stamp__facts">
+        @for (dato of perfil.datosClave; track dato.etiqueta) {
+          <div class="stamp__fact">
+            <dt>{{ dato.etiqueta }}</dt>
+            <dd>{{ dato.valor }}</dd>
+          </div>
+        }
+      </dl>
+    </aside>
   </header>
-  <p class="page-lead">
-    Presentación del portafolio en construcción. El contenido se incorpora en la siguiente fase.
-  </p>
+
+  <dl class="stats" aria-label="Cifras del catálogo">
+    @for (cifra of cifras(); track cifra.id) {
+      <div class="stat">
+        <dt class="stat__label">{{ cifra.etiqueta }}</dt>
+        <dd class="stat__value">{{ cifra.valor }}</dd>
+      </div>
+    }
+  </dl>
+
+  <section class="home__block" aria-labelledby="inicio-proyectos-title">
+    <app-section-header
+      headingId="inicio-proyectos-title"
+      index="01.1"
+      title="Proyectos del catálogo"
+      description="Una vista compacta de los cinco proyectos; cada fila abre su ficha completa."
+    />
+
+    <ul class="projects" role="list">
+      @for (proyecto of proyectos(); track proyecto.id) {
+        <li class="project-row">
+          <span class="project-row__index" aria-hidden="true">{{ proyecto.numero }}</span>
+          <div class="project-row__body">
+            <h3 class="project-row__title">
+              <a class="project-row__link" [routerLink]="['/proyectos', proyecto.id]">
+                {{ proyecto.nombre }}
+              </a>
+            </h3>
+            <p class="project-row__summary">{{ proyecto.resumen }}</p>
+          </div>
+          <p class="project-row__category">{{ proyecto.categoriaEtiqueta }}</p>
+        </li>
+      }
+    </ul>
+
+    <a class="page-link" routerLink="/proyectos">
+      Ver el catálogo completo <span aria-hidden="true">→</span>
+    </a>
+  </section>
+
+  <section class="closing" aria-labelledby="inicio-cierre-title">
+    <div>
+      <p class="closing__index" aria-hidden="true">01.2</p>
+      <h2 id="inicio-cierre-title" class="closing__title">¿Quieres ponerte en contacto?</h2>
+      <p class="closing__text">
+        Escríbeme por correo o encuéntrame en LinkedIn y GitHub; están todos mis canales.
+      </p>
+    </div>
+    <a class="action action--primary" routerLink="/contacto">Ir a contacto</a>
+  </section>
 </section>
