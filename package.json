@@ -1,6 +1,8 @@
 {
   "name": "proyecto-portafolio",
   "version": "0.0.0",
+  "description": "Portafolio digital de David Mora Duque con perfil profesional y catálogo de cinco proyectos, construido con Angular.",
+  "author": "David Mora Duque",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

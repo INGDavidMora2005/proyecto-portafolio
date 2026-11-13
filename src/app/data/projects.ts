@@ -45,7 +45,6 @@ export const PROJECTS: readonly Project[] = [
       'Rutas limpias con PathLocationStrategy',
     ],
     repoUrl: 'https://github.com/INGDavidMora2005/proyecto-portafolio',
-    // TODO(Fase 8): el portafolio aún no está publicado en GitHub Pages.
     demoUrl: 'https://ingdavidmora2005.github.io/proyecto-portafolio/',
     categoria: 'portafolio',
   },
