@@ -1,7 +1,84 @@
-<section class="page">
-  <header class="page-head">
-    <h1 class="page-title">Proyecto «{{ id() }}»</h1>
-    <span class="page-index" aria-hidden="true">04</span>
-  </header>
-  <p class="page-lead">Ficha del proyecto en preparación.</p>
-</section>
+@if (proyecto(); as p) {
+  <article class="detail" aria-labelledby="proyecto-title">
+    <a class="detail__back" routerLink="/proyectos">
+      <span aria-hidden="true">←</span>
+      Volver al catálogo
+    </a>
+
+    <header class="detail__head">
+      <p class="detail__kicker">
+        <span class="detail__kicker-index" aria-hidden="true">03.1</span>
+        {{ categoria() }}
+      </p>
+      <h1 id="proyecto-title" class="detail__title">{{ p.nombre }}</h1>
+      <p class="detail__summary">{{ p.resumen }}</p>
+    </header>
+
+    <div class="detail__actions">
+      <a
+        class="detail__action detail__action--primary"
+        [href]="p.repoUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Repositorio<span class="visually-hidden"> (se abre en una pestaña nueva)</span>
+      </a>
+      <a class="detail__action" [href]="p.demoUrl" target="_blank" rel="noopener noreferrer">
+        Aplicación<span class="visually-hidden"> (se abre en una pestaña nueva)</span>
+      </a>
+    </div>
+
+    <p class="detail__description">{{ p.descripcion }}</p>
+
+    <div class="detail__body">
+      <section class="detail__section" aria-labelledby="tecnologias-title">
+        <h2 id="tecnologias-title" class="detail__subtitle">Tecnologías</h2>
+        <ul class="detail__chips" aria-label="Tecnologías del proyecto">
+          @for (tecnologia of p.tecnologias; track tecnologia) {
+            <li><app-tech-chip [label]="tecnologia" /></li>
+          }
+        </ul>
+      </section>
+
+      <section class="detail__section" aria-labelledby="caracteristicas-title">
+        <h2 id="caracteristicas-title" class="detail__subtitle">Características principales</h2>
+        <ul class="detail__features">
+          @for (caracteristica of p.caracteristicas; track caracteristica) {
+            <li>{{ caracteristica }}</li>
+          }
+        </ul>
+      </section>
+    </div>
+
+    <nav class="detail__pager" aria-label="Navegación entre proyectos">
+      @if (anterior(); as previo) {
+        <a class="pager" [routerLink]="['/proyectos', previo.id]">
+          <span class="pager__label">← Anterior</span>
+          <span class="pager__title">{{ previo.nombre }}</span>
+        </a>
+      }
+      @if (siguiente(); as proximo) {
+        <a class="pager pager--next" [routerLink]="['/proyectos', proximo.id]">
+          <span class="pager__label">Siguiente →</span>
+          <span class="pager__title">{{ proximo.nombre }}</span>
+        </a>
+      }
+    </nav>
+  </article>
+} @else {
+  <section class="detail detail--missing" aria-labelledby="no-encontrado-title">
+    <a class="detail__back" routerLink="/proyectos">
+      <span aria-hidden="true">←</span>
+      Volver al catálogo
+    </a>
+    <p class="detail__code" aria-hidden="true">404</p>
+    <h1 id="no-encontrado-title" class="detail__title">Proyecto no encontrado</h1>
+    <p class="detail__summary">
+      No existe un proyecto con el identificador «{{ id() }}». Puede que el enlace esté mal escrito
+      o que el proyecto ya no esté en el catálogo.
+    </p>
+    <a class="detail__action detail__action--primary" routerLink="/proyectos">
+      Ver todos los proyectos
+    </a>
+  </section>
+}

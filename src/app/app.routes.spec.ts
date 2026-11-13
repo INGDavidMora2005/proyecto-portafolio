@@ -33,7 +33,17 @@ describe('rutas', () => {
   it('renderiza el detalle con el id de la ruta', async () => {
     const harness = await RouterTestingHarness.create('/proyectos/portafolio');
 
-    expect(harness.routeNativeElement?.textContent).toContain('portafolio');
+    expect(harness.routeNativeElement?.querySelector('h1')?.textContent).toContain(
+      'Portafolio profesional',
+    );
+  });
+
+  it('renderiza un estado de no encontrado para un proyecto inexistente', async () => {
+    const harness = await RouterTestingHarness.create('/proyectos/no-existe');
+
+    expect(harness.routeNativeElement?.querySelector('h1')?.textContent).toContain(
+      'Proyecto no encontrado',
+    );
   });
 
   it('renderiza la página de contacto', async () => {
