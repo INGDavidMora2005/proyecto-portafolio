@@ -1,7 +1,7 @@
 name: "CI/CD"
 
-# Actividad académica sobre integración continua: el workflow compila y prueba
-# el portafolio; el despliegue se agrega en una fase posterior.
+# Actividad académica sobre integración y despliegue continuo: el workflow compila,
+# prueba y despliega el portafolio y luego verifica la publicación servida por Pages.
 
 on:
   push:
@@ -13,7 +13,6 @@ on:
 permissions:
   contents: read
 
-# Evita ejecuciones duplicadas del mismo ref mientras una anterior sigue corriendo.
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
@@ -24,34 +23,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Descarga el código del repositorio.
       - name: Checkout del repositorio
         uses: actions/checkout@v7
 
-      # Instala Node.js 24 con caché de dependencias de npm.
       - name: Configurar Node.js
         uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
 
-      # Instala las dependencias del proyecto.
       - name: Instalar dependencias
         run: npm ci
 
-      # Ejecuta la suite de pruebas unitarias.
       - name: Ejecutar pruebas
         run: npm test -- --no-watch
 
-      # Compila el proyecto en modo producción con el base href de GitHub Pages.
       - name: Compilar proyecto
         run: npm run build -- --base-href /proyecto-portafolio/
 
-      # El fallback 404 del sitio se sirve desde index.html en GitHub Pages.
       - name: Copiar index.html a 404.html
         run: cp dist/proyecto-portafolio/browser/index.html dist/proyecto-portafolio/browser/404.html
 
-      # El build falla si no existe el 404.html o si el base href no está correcto.
       - name: Validar artefactos del build
         run: |
           if [ ! -f dist/proyecto-portafolio/browser/404.html ]; then
@@ -61,5 +53,112 @@ jobs:
 
           if ! grep -q "/proyecto-portafolio/" dist/proyecto-portafolio/browser/index.html; then
             echo "::error::El index.html no contiene el base href /proyecto-portafolio/"
+            exit 1
+          fi
+
+      # El artefacto solo se sube a Pages para despliegues (push o ejecución manual),
+      # no para los pull requests, que solo se usan para validar el build.
+      - name: Configurar Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v6
+
+      - name: Subir artefacto de Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist/proyecto-portafolio/browser
+
+  deploy:
+    name: Desplegar en GitHub Pages
+    needs: build
+    if: >-
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
+      github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Desplegar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+
+  verify:
+    name: Verificar despliegue
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verificar la publicación
+        id: verificacion
+        env:
+          URL_BASE: ${{ needs.deploy.outputs.page_url }}
+          INTENTOS_MAX: 10
+          SEGUNDOS_ESPERA: 15
+        run: |
+          URL="${URL_BASE%/}"
+          MAX="${INTENTOS_MAX}"
+          ESPERA="${SEGUNDOS_ESPERA}"
+
+          INTENTO=1
+          CODIGO=000
+          while [ "$INTENTO" -le "$MAX" ]; do
+            CODIGO=$(curl --silent --show-error --output "$RUNNER_TEMP/index-base.html" --write-out "%{http_code}" "$URL")
+            if [ "$CODIGO" = "200" ]; then
+              break
+            fi
+            INTENTO=$((INTENTO + 1))
+            if [ "$INTENTO" -le "$MAX" ]; then
+              sleep "$ESPERA"
+            fi
+          done
+
+          if [ "$CODIGO" != "200" ]; then
+            echo "::error::La URL base ${URL} respondió ${CODIGO} después de $MAX intentos. No se pudo verificar el despliegue."
+            exit 1
+          fi
+
+          if ! grep -q "<app-root" "$RUNNER_TEMP/index-base.html"; then
+            echo "::error::El HTML publicado en ${URL} no contiene el marcador <app-root>."
+            exit 1
+          fi
+
+          BUNDLE=$(grep -oE 'src="[^"]+"' "$RUNNER_TEMP/index-base.html" | head -n 1 | sed -e 's/^src="//' -e 's/"$//' -e 's|^/proyecto-portafolio/||')
+          if [ -z "$BUNDLE" ]; then
+            echo "::error::No se detectó el bundle JavaScript en el HTML publicado."
+            exit 1
+          fi
+
+          BUNDLE_CODE=$(curl --silent --show-error --output /dev/null --write-out "%{http_code}" "$URL/$BUNDLE")
+          if [ "$BUNDLE_CODE" != "200" ]; then
+            echo "::error::El bundle ${BUNDLE} respondió ${BUNDLE_CODE}, se esperaba 200."
+            exit 1
+          fi
+
+          PERFIL_CODE=$(curl --silent --show-error --output "$RUNNER_TEMP/index-perfil.html" --write-out "%{http_code}" "$URL/perfil")
+          PERFIL_OK="false"
+          if grep -q "<app-root" "$RUNNER_TEMP/index-perfil.html"; then
+            PERFIL_OK="true"
+          fi
+
+          {
+            echo "### Verificación del despliegue en GitHub Pages"
+            echo ""
+            echo "- URL publicada: \`${URL}\`"
+            echo "- URL base: respuesta HTTP ${CODIGO}; contiene \`<app-root\`: OK"
+            echo "- Bundle principal (\`${BUNDLE}\`): respuesta HTTP ${BUNDLE_CODE}; esperado 200: OK"
+            echo "- Ruta profunda /perfil: respuesta HTTP ${PERFIL_CODE}; contiene \`<app-root\`: ${PERFIL_OK}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$PERFIL_OK" != "true" ]; then
+            echo "::error::La ruta /perfil no devolvió el marcador <app-root>; el truco del 404.html no se aplicó como se esperaba."
             exit 1
           fi
