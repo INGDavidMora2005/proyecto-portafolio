@@ -23,6 +23,16 @@
   line-height: var(--leading-snug);
 }
 
+.section-header--page {
+  padding-top: var(--space-4);
+}
+
+.section-header--page .section-header__title {
+  font-size: var(--text-3xl);
+  font-stretch: 104%;
+  letter-spacing: var(--tracking-tight);
+}
+
 .section-header__description {
   max-width: 62ch;
   margin-top: var(--space-2);

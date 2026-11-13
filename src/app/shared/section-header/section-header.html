@@ -1,7 +1,17 @@
-<header class="section-header">
+<header class="section-header" [class.section-header--page]="level() === 1">
   <span class="section-header__index" aria-hidden="true">{{ index() }}</span>
   <div class="section-header__body">
-    <h2 class="section-header__title" [id]="headingId()">{{ title() }}</h2>
+    @switch (level()) {
+      @case (1) {
+        <h1 class="section-header__title" [id]="headingId()">{{ title() }}</h1>
+      }
+      @case (3) {
+        <h3 class="section-header__title" [id]="headingId()">{{ title() }}</h3>
+      }
+      @default {
+        <h2 class="section-header__title" [id]="headingId()">{{ title() }}</h2>
+      }
+    }
     @if (description(); as texto) {
       <p class="section-header__description">{{ texto }}</p>
     }
