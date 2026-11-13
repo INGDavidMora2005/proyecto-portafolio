@@ -1,0 +1,39 @@
+<article class="project-card">
+  <p class="project-card__category">
+    <span class="project-card__marker" aria-hidden="true"></span>
+    {{ categoria() }}
+  </p>
+
+  <h2 class="project-card__title">
+    <a class="project-card__link" [routerLink]="['/proyectos', project().id]">
+      {{ project().nombre }}
+    </a>
+  </h2>
+
+  <p class="project-card__summary">{{ project().resumen }}</p>
+
+  <ul class="project-card__chips" aria-label="Tecnologías">
+    @for (tecnologia of project().tecnologias; track tecnologia) {
+      <li><app-tech-chip [label]="tecnologia" /></li>
+    }
+  </ul>
+
+  <div class="project-card__actions">
+    <a
+      class="project-card__action"
+      [href]="project().repoUrl"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Repositorio<span class="visually-hidden"> (se abre en una pestaña nueva)</span>
+    </a>
+    <a
+      class="project-card__action project-card__action--accent"
+      [href]="project().demoUrl"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Aplicación<span class="visually-hidden"> (se abre en una pestaña nueva)</span>
+    </a>
+  </div>
+</article>
