@@ -64,7 +64,6 @@ export const PROJECTS: readonly Project[] = [
       'Librería publicada en NPM y documentada con Compodoc',
     ],
     repoUrl: 'https://github.com/INGDavidMora2005/Project-Store-Manager-Actividad',
-    // TODO(Fase 8): la URL debe apuntar al Showcase cuando se despliegue la app.
     demoUrl: 'https://ingdavidmora2005.github.io/Project-Store-Manager-Actividad/',
     categoria: 'libreria',
   },
@@ -82,10 +81,9 @@ export const PROJECTS: readonly Project[] = [
       'Ambas aplicaciones usan datos locales, sin backend para visualizar el contenido',
       'Pruebas unitarias con Jest en la aplicación Angular',
       'Dos aplicaciones independientes dentro del mismo repositorio',
+      'El sitio publicado sirve la SPA en la raíz y la versión SSG con Astro bajo /astro/',
     ],
     repoUrl: 'https://github.com/INGDavidMora2005/Taller-4-Astro-Angular-SSG-SPA',
-    // TODO(Fase 8): el repo contiene Astro-SSG y Client-Angular. Falta definir
-    // cuál se publica en la raíz y cuál, si aplica, en un subdirectorio.
     demoUrl: 'https://ingdavidmora2005.github.io/Taller-4-Astro-Angular-SSG-SPA/',
     categoria: 'aplicacion-web',
   },
@@ -105,7 +103,6 @@ export const PROJECTS: readonly Project[] = [
       'Pruebas unitarias con Jest',
     ],
     repoUrl: 'https://github.com/INGDavidMora2005/Uceva-Angular-Taller-Clean-Architecture',
-    // TODO(Fase 8): el repo no tiene workflow de Pages; confirmar la URL al desplegar.
     demoUrl: 'https://ingdavidmora2005.github.io/Uceva-Angular-Taller-Clean-Architecture/',
     categoria: 'aplicacion-web',
   },
@@ -121,7 +118,7 @@ export const PROJECTS: readonly Project[] = [
       'Rutas limpias con PathLocationStrategy',
       'Fallback 404.html para recargar rutas internas en GitHub Pages',
       'Pipeline con pruebas, build y despliegue en GitHub Pages',
-      'Build con base-href calculado desde el nombre del repositorio',
+      'Build con base-href /lab-pipelines-patch/ para publicar en el subdirectorio',
       'Aplicación publicada y disponible en GitHub Pages',
     ],
     repoUrl: 'https://github.com/INGDavidMora2005/lab-pipelines-patch',
