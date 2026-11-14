@@ -65,6 +65,34 @@
   margin-top: var(--space-3);
 }
 
+.languages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.language {
+  display: inline-flex;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--rule);
+  background: var(--panel);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.language__name {
+  color: var(--ink-soft);
+}
+
+.language__level {
+  color: var(--accent);
+  font-weight: 500;
+}
+
 .profile__cta {
   display: flex;
   flex-wrap: wrap;

@@ -34,15 +34,4 @@ describe('IdentityFicha', () => {
       PERFIL.datosClave.map((dato) => ({ etiqueta: dato.etiqueta, valor: dato.valor })),
     );
   });
-
-  it('muestra los idiomas con su nivel, incluido inglés B2', () => {
-    const element = crear();
-    const idiomas = Array.from(element.querySelectorAll('.ficha__language')).map((idioma) => ({
-      nombre: idioma.querySelector('dt')?.textContent?.trim(),
-      nivel: idioma.querySelector('dd')?.textContent?.trim(),
-    }));
-
-    expect(idiomas).toHaveLength(PERFIL.idiomas.length);
-    expect(idiomas).toContainEqual({ nombre: 'Inglés', nivel: 'B2' });
-  });
 });

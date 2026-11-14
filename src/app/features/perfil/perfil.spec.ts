@@ -36,6 +36,17 @@ describe('Perfil', () => {
     expect(parrafos).toEqual(PERFIL.presentacion.map((parrafo) => parrafo.trim()));
   });
 
+  it('muestra los idiomas con su nivel, incluido inglés B2', () => {
+    const element = crear();
+    const idiomas = Array.from(element.querySelectorAll('.language')).map((idioma) => ({
+      nombre: idioma.querySelector('.language__name')?.textContent?.trim(),
+      nivel: idioma.querySelector('.language__level')?.textContent?.trim(),
+    }));
+
+    expect(idiomas).toHaveLength(PERFIL.idiomas.length);
+    expect(idiomas).toContainEqual({ nombre: 'Inglés', nivel: 'B2' });
+  });
+
   it('renderiza una capa de habilidades por cada grupo de los datos', () => {
     const element = crear();
     const capas = Array.from(element.querySelectorAll('app-skills-list .layer'));
