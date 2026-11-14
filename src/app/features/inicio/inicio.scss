@@ -21,7 +21,6 @@
 .hero__kicker,
 .project-row__index,
 .project-row__category,
-.stamp__fact dt,
 .stat__label {
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
@@ -92,35 +91,38 @@
   color: var(--accent-ink);
 }
 
-.stamp {
+.hero__aside {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  padding: var(--space-4);
-  border: 1px solid var(--rule);
-  background: var(--panel);
+  align-items: center;
 }
 
-.stamp__monogram {
-  display: grid;
-  place-items: center;
-  min-height: 108px;
-  border: 1px solid var(--rule-strong);
-  border-left: 3px solid var(--accent);
-  background: var(--paper);
-  font-size: clamp(2.4rem, 9vw, 3.4rem);
+.hero__portrait {
+  width: clamp(180px, 28vw, 260px);
+  aspect-ratio: 4 / 5;
+}
+
+.hero__monogram {
+  margin: 0;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 5vw, 2rem);
   font-weight: 600;
   letter-spacing: -0.05em;
 }
 
-.stamp__facts {
+.hero__facts {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-3) var(--space-4);
+  gap: var(--space-2) var(--space-4);
+  width: 100%;
+  margin-top: var(--space-1);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
 }
 
-.stamp__fact dt,
-.project-row__category {
+.hero__fact dt {
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   letter-spacing: 0.06em;
@@ -128,21 +130,9 @@
   color: var(--ink-faint);
 }
 
-.stamp__fact dd {
+.hero__fact dd {
+  margin-top: 0.15rem;
   font-size: var(--text-sm);
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
-  gap: 1px;
-  border: 1px solid var(--rule);
-  background: var(--rule);
-}
-
-.stat {
-  padding: var(--space-4) var(--space-5);
-  background: var(--panel);
 }
 
 .stat__value {
@@ -151,7 +141,23 @@
   font-family: var(--font-display);
   font-size: var(--text-2xl);
   font-weight: 600;
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .stat__value {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  .stat__value--animado {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 .projects {
   margin-top: var(--space-4);

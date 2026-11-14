@@ -14,11 +14,21 @@
       </div>
     </div>
 
-    <aside class="stamp" aria-label="Datos del perfil">
-      <p class="stamp__monogram" aria-hidden="true">DM</p>
-      <dl class="stamp__facts">
+    <aside class="hero__aside" aria-label="Retrato y datos del perfil">
+      <app-portrait-frame
+        class="hero__portrait"
+        [src]="'images/perfil-800.webp'"
+        [alt]="'Retrato de David Mora Duque'"
+        [width]="800"
+        [height]="1000"
+        [loading]="'eager'"
+        [fetchpriority]="'high'"
+        [sizes]="'(min-width: 1024px) 360px, (min-width: 640px) 300px, 92vw'"
+      />
+      <p class="hero__monogram" aria-hidden="true">DM</p>
+      <dl class="hero__facts">
         @for (dato of perfil.datosClave; track dato.etiqueta) {
-          <div class="stamp__fact">
+          <div class="hero__fact">
             <dt>{{ dato.etiqueta }}</dt>
             <dd>{{ dato.valor }}</dd>
           </div>
@@ -28,10 +38,10 @@
   </header>
 
   <dl class="stats" aria-label="Cifras del catálogo">
-    @for (cifra of cifras(); track cifra.id) {
+    @for (cifra of cifrasAnimadas(); track cifra.id) {
       <div class="stat">
         <dt class="stat__label">{{ cifra.etiqueta }}</dt>
-        <dd class="stat__value">{{ cifra.valor }}</dd>
+        <dd class="stat__value" [class.stat__value--animado]="cifra.animada" [attr.data-cifra]="cifra.id">{{ cifra.valorMostrado }}</dd>
       </div>
     }
   </dl>
