@@ -44,7 +44,7 @@ npm test -- --no-watch
 npm run build
 ```
 
-- Pruebas: **69 tests** en **17 archivos** con Vitest (datos, servicios, componentes compartidos y páginas).
+- Pruebas: **75 tests** en **20 archivos** con Vitest (datos, servicios, componentes compartidos y páginas).
 - Convenciones: Conventional Commits en español (p. ej. `feat(inicio): construye la pagina de inicio`), ramas por funcionalidad con pull requests.
 
 ## Enrutamiento
@@ -75,15 +75,15 @@ Paso manual: **Settings → Pages → Source = GitHub Actions**.
 
 ## Catálogo de proyectos
 
-| Proyecto | Repositorio |
-|---|---|
-| Portafolio profesional | https://github.com/INGDavidMora2005/proyecto-portafolio |
-| Storage Manager | https://github.com/INGDavidMora2005/Project-Store-Manager-Actividad |
-| Astro + Angular SSG/SPA | https://github.com/INGDavidMora2005/Taller-4-Astro-Angular-SSG-SPA |
-| Clean Architecture Angular | https://github.com/INGDavidMora2005/Uceva-Angular-Taller-Clean-Architecture |
-| Pipelines · DevHub | https://github.com/INGDavidMora2005/lab-pipelines-patch |
+| Proyecto | Repositorio | Demo desplegada |
+|---|---|---|
+| Portafolio profesional | https://github.com/INGDavidMora2005/proyecto-portafolio | https://ingdavidmora2005.github.io/proyecto-portafolio/ |
+| Storage Manager | https://github.com/INGDavidMora2005/Project-Store-Manager-Actividad | https://ingdavidmora2005.github.io/Project-Store-Manager-Actividad/ |
+| Astro + Angular SSG/SPA | https://github.com/INGDavidMora2005/Taller-4-Astro-Angular-SSG-SPA | https://ingdavidmora2005.github.io/Taller-4-Astro-Angular-SSG-SPA/ |
+| Clean Architecture Angular | https://github.com/INGDavidMora2005/Uceva-Angular-Taller-Clean-Architecture | https://ingdavidmora2005.github.io/Uceva-Angular-Taller-Clean-Architecture/ |
+| Pipelines · DevHub | https://github.com/INGDavidMora2005/lab-pipelines-patch | https://ingdavidmora2005.github.io/lab-pipelines-patch/ |
 
-Para el portafolio, la aplicación está desplegada en <https://ingdavidmora2005.github.io/proyecto-portafolio/>.
+En Astro + Angular SSG/SPA, la raíz publica la SPA de Angular y la versión SSG con Astro está en <https://ingdavidmora2005.github.io/Taller-4-Astro-Angular-SSG-SPA/astro/>.
 
 ## Autor
 
