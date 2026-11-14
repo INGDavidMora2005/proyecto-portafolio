@@ -1,0 +1,42 @@
+:host {
+  display: block;
+}
+
+.skills {
+  display: flex;
+  flex-direction: column;
+}
+
+.skill {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-block: var(--space-4);
+}
+
+.skill + .skill {
+  border-top: 1px solid var(--rule);
+}
+
+.skill__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.skill__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+@media (min-width: 640px) {
+  .skill {
+    display: grid;
+    grid-template-columns: minmax(0, 9rem) minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: start;
+  }
+}

@@ -1,0 +1,24 @@
+<aside class="ficha" aria-label="Ficha de identidad">
+  <div class="ficha__monogram" aria-hidden="true">
+    <span class="ficha__monogram-text">DM</span>
+  </div>
+  <div class="ficha__body">
+    <p class="ficha__name">{{ perfil().nombre }}</p>
+    <dl class="ficha__facts">
+      @for (dato of perfil().datosClave; track dato.etiqueta) {
+        <div class="ficha__fact">
+          <dt>{{ dato.etiqueta }}</dt>
+          <dd>{{ dato.valor }}</dd>
+        </div>
+      }
+    </dl>
+    <dl class="ficha__languages">
+      @for (idioma of perfil().idiomas; track idioma.nombre) {
+        <div class="ficha__language">
+          <dt>{{ idioma.nombre }}</dt>
+          <dd>{{ idioma.nivel }}</dd>
+        </div>
+      }
+    </dl>
+  </div>
+</aside>

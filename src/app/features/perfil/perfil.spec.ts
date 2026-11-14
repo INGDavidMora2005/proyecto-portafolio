@@ -11,43 +11,63 @@ describe('Perfil', () => {
     }).compileComponents();
   });
 
-  it('muestra el nombre y el titular del perfil', () => {
+  function crear(): HTMLElement {
     const fixture = TestBed.createComponent(Perfil);
     fixture.detectChanges();
-    const element = fixture.nativeElement as HTMLElement;
+    return fixture.nativeElement as HTMLElement;
+  }
 
-    expect(element.querySelector('.identity__name')?.textContent).toContain(PERFIL.nombre);
-    expect(element.querySelector('.identity__role')?.textContent).toContain(PERFIL.titular);
+  it('usa un único h1 para la cabecera de página', () => {
+    const element = crear();
+    const titulos = Array.from(element.querySelectorAll('h1'));
+
+    expect(titulos).toHaveLength(1);
+    expect(titulos[0].textContent).toContain('Perfil');
+    expect(titulos[0].id).toBe('perfil-title');
   });
 
-  it('renderiza una tarjeta de habilidades por cada grupo de los datos', () => {
-    const fixture = TestBed.createComponent(Perfil);
-    fixture.detectChanges();
-    const element = fixture.nativeElement as HTMLElement;
-    const tarjetas = Array.from(element.querySelectorAll('.skill-card'));
+  it('presenta el titular y los tres párrafos de presentación', () => {
+    const element = crear();
+    const parrafos = Array.from(element.querySelectorAll('.prose p')).map((parrafo) =>
+      parrafo.textContent?.trim(),
+    );
 
-    expect(tarjetas).toHaveLength(PERFIL.habilidades.length);
-    expect(tarjetas.map((tarjeta) => tarjeta.querySelector('h3')?.textContent?.trim())).toEqual(
+    expect(element.querySelector('.profile__lead')?.textContent).toContain(PERFIL.titular);
+    expect(parrafos).toEqual(PERFIL.presentacion.map((parrafo) => parrafo.trim()));
+  });
+
+  it('renderiza una fila de habilidades por cada grupo de los datos', () => {
+    const element = crear();
+    const filas = Array.from(element.querySelectorAll('app-skills-list .skill'));
+
+    expect(filas).toHaveLength(PERFIL.habilidades.length);
+    expect(filas.map((fila) => fila.querySelector('.skill__label')?.textContent?.trim())).toEqual(
       PERFIL.habilidades.map((grupo) => grupo.titulo),
     );
+
+    for (const [indice, fila] of filas.entries()) {
+      const chips = Array.from(fila.querySelectorAll('app-tech-chip')).map((chip) =>
+        chip.textContent?.trim(),
+      );
+
+      expect(chips).toEqual(PERFIL.habilidades[indice].elementos);
+    }
   });
 
-  it('muestra el nivel de inglés', () => {
-    const fixture = TestBed.createComponent(Perfil);
-    fixture.detectChanges();
-    const element = fixture.nativeElement as HTMLElement;
-    const idiomas = Array.from(element.querySelectorAll('.language')).map((idioma) => ({
-      nombre: idioma.querySelector('dt')?.textContent?.trim(),
-      nivel: idioma.querySelector('dd')?.textContent?.trim(),
-    }));
+  it('renderiza los cuatro principios en una lista ordenada', () => {
+    const element = crear();
+    const principios = Array.from(element.querySelectorAll('ol.principles > li'));
 
-    expect(idiomas).toContainEqual({ nombre: 'Inglés', nivel: 'B2' });
+    expect(principios).toHaveLength(PERFIL.principios.length);
+    expect(
+      principios.map((principio) =>
+        principio.querySelector('.principle__title')?.textContent?.trim(),
+      ),
+    ).toEqual(PERFIL.principios.map((principio) => principio.titulo));
   });
 
   it('cierra con enlaces a proyectos y contacto', () => {
-    const fixture = TestBed.createComponent(Perfil);
-    fixture.detectChanges();
-    const element = fixture.nativeElement as HTMLElement;
+    const element = crear();
     const enlaces = Array.from(element.querySelectorAll<HTMLAnchorElement>('.cta-link')).map(
       (enlace) => enlace.getAttribute('href')?.replace(/^https?:\/\/[^/]+/, ''),
     );
