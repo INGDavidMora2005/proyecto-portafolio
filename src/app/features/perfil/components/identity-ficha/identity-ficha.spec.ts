@@ -14,10 +14,12 @@ describe('IdentityFicha', () => {
     return fixture.nativeElement as HTMLElement;
   }
 
-  it('muestra el monograma y el nombre del perfil', () => {
+  it('muestra el retrato y el nombre del perfil', () => {
     const element = crear();
 
-    expect(element.querySelector('.ficha__monogram-text')?.textContent?.trim()).toBe('DM');
+    expect(element.querySelector('app-portrait-frame img')?.getAttribute('alt')).toBe(
+      'Retrato de David Mora Duque',
+    );
     expect(element.querySelector('.ficha__name')?.textContent).toContain(PERFIL.nombre);
   });
 

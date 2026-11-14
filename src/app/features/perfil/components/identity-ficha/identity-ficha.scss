@@ -12,43 +12,10 @@
   background: var(--panel);
 }
 
-.ficha__monogram {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: clamp(4rem, 13vw, 6rem);
-  aspect-ratio: 1;
-  overflow: hidden;
-  border: 1px solid var(--rule-strong);
-  background: var(--paper);
-}
-
-.ficha__monogram::before {
-  position: absolute;
-  right: -18%;
-  bottom: -18%;
-  width: 80%;
-  height: 1px;
-  background: var(--accent);
-  transform: rotate(-45deg);
-  content: '';
-}
-
-.ficha__monogram::after {
-  position: absolute;
-  right: var(--space-2);
-  bottom: var(--space-2);
-  width: 6px;
-  height: 6px;
-  background: var(--accent);
-  content: '';
-}
-
-.ficha__monogram-text {
-  font-family: var(--font-display);
-  font-size: clamp(1.9rem, 6vw, 2.6rem);
-  font-weight: 600;
-  letter-spacing: -0.05em;
+.ficha__portrait {
+  width: clamp(150px, 22vw, 200px);
+  aspect-ratio: 4 / 5;
+  align-self: center;
 }
 
 .ficha__name {

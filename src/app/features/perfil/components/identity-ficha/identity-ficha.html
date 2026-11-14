@@ -1,7 +1,14 @@
 <aside class="ficha" aria-label="Ficha de identidad">
-  <div class="ficha__monogram" aria-hidden="true">
-    <span class="ficha__monogram-text">DM</span>
-  </div>
+  <app-portrait-frame
+    class="ficha__portrait"
+    [src]="'images/perfil-800.webp'"
+    [alt]="'Retrato de David Mora Duque'"
+    [width]="800"
+    [height]="1000"
+    [loading]="'lazy'"
+    [fetchpriority]="'low'"
+    [sizes]="'(min-width: 1024px) 240px, (min-width: 640px) 200px, 88vw'"
+  />
   <div class="ficha__body">
     <p class="ficha__name">{{ perfil().nombre }}</p>
     <dl class="ficha__facts">
