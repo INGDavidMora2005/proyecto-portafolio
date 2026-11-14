@@ -3,7 +3,7 @@
     headingId="contacto-title"
     index="04"
     title="Contacto"
-    description="Elige el canal que prefieras. No hay formulario ni servidor: el correo se abre en tu cliente o se copia al portapapeles."
+    description="Elige el canal que prefieras. No hay formulario ni servidor: el correo se abre en tu cliente o en Gmail/Outlook, o se copia al portapapeles."
     [level]="1"
   />
 
@@ -20,7 +20,27 @@
 
         <div class="channel__actions">
           @if (canal.tipo === 'correo') {
-            <a class="channel__action" [href]="canal.url">Escribir correo</a>
+            <a class="channel__action" [href]="canal.url" (click)="prepararAyudaCorreo()">
+              Escribirme
+            </a>
+            <a
+              class="channel__action channel__action--secondary"
+              [href]="enlacesCorreo.gmail"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Abrir en Gmail
+              <span class="visually-hidden"> (se abre en una pestaña nueva)</span>
+            </a>
+            <a
+              class="channel__action channel__action--secondary"
+              [href]="enlacesCorreo.outlook"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Abrir en Outlook
+              <span class="visually-hidden"> (se abre en una pestaña nueva)</span>
+            </a>
             <button
               type="button"
               class="channel__action channel__action--copy"
@@ -35,6 +55,16 @@
             </a>
           }
         </div>
+
+        @if (canal.tipo === 'correo') {
+          <p
+            class="channel__help"
+            [class.channel__help--visible]="ayudaCorreo()"
+            aria-live="polite"
+          >
+            {{ ayudaCorreo() ? 'Si no se abrió tu app de correo, usa una de estas opciones.' : '' }}
+          </p>
+        }
       </li>
     }
   </ul>
