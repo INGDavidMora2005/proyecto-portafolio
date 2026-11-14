@@ -10,7 +10,6 @@ export type SectionHeaderLevel = 1 | 2 | 3;
 })
 export class SectionHeader {
   readonly headingId = input.required<string>();
-  readonly index = input.required<string>();
   readonly title = input.required<string>();
   readonly description = input<string>();
   readonly level = input<SectionHeaderLevel>(2);

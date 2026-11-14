@@ -29,15 +29,6 @@
   border-top: 0;
 }
 
-.principle__index {
-  flex: none;
-  font-family: var(--font-mono);
-  font-size: var(--text-lg);
-  font-weight: 600;
-  color: var(--accent);
-  letter-spacing: var(--tracking-tight);
-}
-
 .principle__body {
   display: flex;
   flex-direction: column;
@@ -108,9 +99,5 @@
   .principle {
     flex-direction: column;
     gap: var(--space-2);
-  }
-
-  .principle__index {
-    font-size: var(--text-2xl);
   }
 }

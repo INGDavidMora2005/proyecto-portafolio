@@ -13,7 +13,6 @@ import { ThemeService } from '../../services/theme';
 interface NavLink {
   readonly path: string;
   readonly label: string;
-  readonly index: string;
 }
 
 @Component({
@@ -33,10 +32,10 @@ export class Navbar {
     this.theme.resolved() === 'dark' ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro',
   );
   protected readonly links: readonly NavLink[] = [
-    { path: '/', label: 'Inicio', index: '01' },
-    { path: '/perfil', label: 'Perfil', index: '02' },
-    { path: '/proyectos', label: 'Proyectos', index: '03' },
-    { path: '/contacto', label: 'Contacto', index: '04' },
+    { path: '/', label: 'Inicio' },
+    { path: '/perfil', label: 'Perfil' },
+    { path: '/proyectos', label: 'Proyectos' },
+    { path: '/contacto', label: 'Contacto' },
   ];
 
   protected toggleMenu(): void {

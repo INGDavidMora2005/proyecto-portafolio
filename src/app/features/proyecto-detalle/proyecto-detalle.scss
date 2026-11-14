@@ -38,18 +38,11 @@
 }
 
 .detail__kicker {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   color: var(--ink-faint);
-}
-
-.detail__kicker-index {
-  color: var(--accent);
 }
 
 .detail__title {

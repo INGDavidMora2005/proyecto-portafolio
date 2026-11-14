@@ -22,10 +22,5 @@ describe('Principles', () => {
         principio.querySelector('.principle__title')?.textContent?.trim(),
       ),
     ).toEqual(PERFIL.principios.map((principio) => principio.titulo));
-    expect(
-      principios.map((principio) =>
-        principio.querySelector('.principle__index')?.textContent?.trim(),
-      ),
-    ).toEqual(['1', '2', '3', '4']);
   });
 });

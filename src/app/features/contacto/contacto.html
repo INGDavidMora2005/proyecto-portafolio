@@ -1,7 +1,6 @@
 <section class="contact" aria-labelledby="contacto-title">
   <app-section-header
     headingId="contacto-title"
-    index="04"
     title="Contacto"
     description="Elige el canal que prefieras. No hay formulario ni servidor: el correo se abre en tu cliente o en Gmail/Outlook, o se copia al portapapeles."
     [level]="1"
@@ -13,7 +12,6 @@
       <li class="channel">
         <div class="channel__head">
           <h2 class="channel__label">{{ canal.etiqueta }}</h2>
-          <span class="channel__index" aria-hidden="true">04.{{ $index + 1 }}</span>
         </div>
 
         <p class="channel__value">{{ canal.valor }}</p>

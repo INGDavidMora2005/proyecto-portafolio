@@ -30,18 +30,6 @@ describe('SkillsList', () => {
     }
   });
 
-  it('asigna un índice secuencial a cada capa', () => {
-    const fixture = TestBed.createComponent(SkillsList);
-    fixture.componentRef.setInput('grupos', PERFIL.habilidades);
-    fixture.detectChanges();
-    const element = fixture.nativeElement as HTMLElement;
-    const indices = Array.from(element.querySelectorAll('.layer__index')).map(
-      (el) => el.textContent?.trim(),
-    );
-
-    expect(indices).toEqual(PERFIL.habilidades.map((_, i) => String(i + 1)));
-  });
-
   it('expone los grupos como lista con aria-label', () => {
     const fixture = TestBed.createComponent(SkillsList);
     fixture.componentRef.setInput('grupos', PERFIL.habilidades);

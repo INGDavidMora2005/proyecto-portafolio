@@ -1,17 +1,8 @@
 .section-header {
   display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr);
-  gap: var(--space-3);
+  grid-template-columns: minmax(0, 1fr);
   padding-top: var(--space-3);
   border-top: 1px solid var(--rule);
-}
-
-.section-header__index {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wide);
-  color: var(--accent);
-  line-height: var(--leading-snug);
 }
 
 .section-header__title {

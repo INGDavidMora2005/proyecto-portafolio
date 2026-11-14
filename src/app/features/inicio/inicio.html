@@ -2,7 +2,6 @@
   <header class="hero">
     <div class="hero__body">
       <p class="hero__kicker">
-        <span class="hero__index" aria-hidden="true">01</span>
         <span>Portafolio · Hoja de perfil</span>
       </p>
       <h1 id="inicio-title" class="hero__title">{{ perfil.nombre }}</h1>
@@ -28,7 +27,6 @@
   <section class="home__block" aria-labelledby="inicio-proyectos-title">
     <app-section-header
       headingId="inicio-proyectos-title"
-      index="01.1"
       title="Proyectos del catálogo"
       description="Una vista compacta de los cinco proyectos; cada fila abre su ficha completa."
     />
@@ -36,7 +34,6 @@
     <ul class="projects" role="list">
       @for (proyecto of proyectos(); track proyecto.id) {
         <li class="project-row">
-          <span class="project-row__index" aria-hidden="true">{{ proyecto.numero }}</span>
           <div class="project-row__body">
             <h3 class="project-row__title">
               <a class="project-row__link" [routerLink]="['/proyectos', proyecto.id]">
@@ -57,7 +54,6 @@
 
   <section class="closing" aria-labelledby="inicio-cierre-title">
     <div>
-      <p class="closing__index" aria-hidden="true">01.2</p>
       <h2 id="inicio-cierre-title" class="closing__title">¿Quieres ponerte en contacto?</h2>
       <p class="closing__text">
         Escríbeme por correo o encuéntrame en LinkedIn y GitHub; están todos mis canales.

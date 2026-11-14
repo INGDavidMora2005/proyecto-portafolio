@@ -20,9 +20,8 @@ export class Inicio {
   protected readonly presentacion = PERFIL.presentacion[1];
 
   protected readonly proyectos = computed(() =>
-    this.projectsService.projects().map((proyecto, indice) => ({
+    this.projectsService.projects().map((proyecto) => ({
       ...proyecto,
-      numero: String(indice + 1).padStart(2, '0'),
       categoriaEtiqueta: etiquetaCategoria(proyecto.categoria),
     })),
   );

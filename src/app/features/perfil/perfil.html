@@ -1,5 +1,5 @@
 <section class="profile" aria-labelledby="perfil-title">
-  <app-section-header headingId="perfil-title" index="02" title="Perfil" [level]="1" />
+  <app-section-header headingId="perfil-title" title="Perfil" [level]="1" />
 
   <div class="profile__top">
     <app-identity-ficha class="profile__top__ficha" [perfil]="perfil" />
@@ -8,7 +8,7 @@
       <p class="profile__lead">{{ perfil.titular }}</p>
 
       <section class="profile__block" aria-labelledby="presentacion-title">
-        <app-section-header headingId="presentacion-title" index="02.1" title="Presentación" />
+        <app-section-header headingId="presentacion-title" title="Presentación" />
         <div class="prose">
           @for (parrafo of perfil.presentacion; track $index) {
             <p>{{ parrafo }}</p>
@@ -17,7 +17,7 @@
       </section>
 
       <section class="profile__block" aria-labelledby="idiomas-title">
-        <app-section-header headingId="idiomas-title" index="02.1.1" title="Idiomas" />
+        <app-section-header headingId="idiomas-title" title="Idiomas" />
         <dl class="languages">
           @for (idioma of perfil.idiomas; track idioma.nombre) {
             <div class="language">
@@ -33,7 +33,6 @@
   <section class="profile__block" aria-labelledby="habilidades-title">
     <app-section-header
       headingId="habilidades-title"
-      index="02.2"
       title="Habilidades"
       description="Tecnologías y prácticas con las que construyo y despliego aplicaciones."
     />
@@ -41,7 +40,7 @@
   </section>
 
   <section class="profile__block" aria-labelledby="principios-title">
-    <app-section-header headingId="principios-title" index="02.3" title="Cómo trabajo" />
+    <app-section-header headingId="principios-title" title="Cómo trabajo" />
     <app-principles [principios]="perfil.principios" />
   </section>
 
