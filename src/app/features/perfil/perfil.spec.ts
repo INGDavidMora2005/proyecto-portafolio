@@ -36,17 +36,17 @@ describe('Perfil', () => {
     expect(parrafos).toEqual(PERFIL.presentacion.map((parrafo) => parrafo.trim()));
   });
 
-  it('renderiza una fila de habilidades por cada grupo de los datos', () => {
+  it('renderiza una capa de habilidades por cada grupo de los datos', () => {
     const element = crear();
-    const filas = Array.from(element.querySelectorAll('app-skills-list .skill'));
+    const capas = Array.from(element.querySelectorAll('app-skills-list .layer'));
 
-    expect(filas).toHaveLength(PERFIL.habilidades.length);
-    expect(filas.map((fila) => fila.querySelector('.skill__label')?.textContent?.trim())).toEqual(
+    expect(capas).toHaveLength(PERFIL.habilidades.length);
+    expect(capas.map((capa) => capa.querySelector('.layer__title')?.textContent?.trim())).toEqual(
       PERFIL.habilidades.map((grupo) => grupo.titulo),
     );
 
-    for (const [indice, fila] of filas.entries()) {
-      const chips = Array.from(fila.querySelectorAll('app-tech-chip')).map((chip) =>
+    for (const [indice, capa] of capas.entries()) {
+      const chips = Array.from(capa.querySelectorAll('app-tech-chip')).map((chip) =>
         chip.textContent?.trim(),
       );
 
