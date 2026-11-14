@@ -21,7 +21,8 @@
 .hero__kicker,
 .project-row__index,
 .project-row__category,
-.stat__label {
+.stat__label,
+.hero-fact dt {
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   letter-spacing: 0.06em;
@@ -48,10 +49,11 @@
 }
 
 .hero__role {
-  max-width: 48ch;
+  max-width: 32ch;
   margin-top: var(--space-3);
   color: var(--ink-soft);
   font-size: var(--text-lg);
+  text-wrap: balance;
 }
 
 .hero__lead {
@@ -78,6 +80,7 @@
   border-radius: var(--radius-sm);
   font-size: var(--text-sm);
   font-weight: 600;
+  transition: all var(--dur-fast) var(--ease-out);
 }
 
 .action:hover {
@@ -91,47 +94,29 @@
   color: var(--accent-ink);
 }
 
-.hero__aside {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  align-items: center;
-}
-
 .hero__portrait {
-  width: clamp(180px, 28vw, 260px);
+  width: clamp(240px, 35vw, 420px);
   aspect-ratio: 4 / 5;
+  align-self: start;
 }
 
-.hero__monogram {
-  margin: 0;
-  color: var(--accent);
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 5vw, 2rem);
-  font-weight: 600;
-  letter-spacing: -0.05em;
-}
-
-.hero__facts {
+.hero-data {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-2) var(--space-4);
-  width: 100%;
-  margin-top: var(--space-1);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--rule);
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--rule);
+  background: var(--panel);
 }
 
-.hero__fact dt {
-  font-family: var(--font-mono);
-  font-size: var(--text-2xs);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
+.hero-fact,
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
 }
 
-.hero__fact dd {
-  margin-top: 0.15rem;
+.hero-fact dd {
   font-size: var(--text-sm);
 }
 
@@ -141,9 +126,7 @@
   font-family: var(--font-display);
   font-size: var(--text-2xl);
   font-weight: 600;
-  transition:
-    opacity var(--dur-base) var(--ease-out),
-    transform var(--dur-base) var(--ease-out);
+  transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -157,7 +140,6 @@
     transform: translateY(0);
   }
 }
-
 
 .projects {
   margin-top: var(--space-4);
@@ -181,9 +163,9 @@
 }
 
 .project-row__link {
-  text-decoration: underline;
-  text-decoration-color: transparent;
+  text-decoration: underline transparent;
   text-underline-offset: 0.2em;
+  transition: color var(--dur-fast) var(--ease-out);
 }
 
 .project-row__link:hover {
@@ -239,7 +221,11 @@
   }
 }
 
-@media (min-width: 760px) {
+@media (min-width: 640px) {
+  .hero-data {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   .project-row {
     grid-template-columns: 2.75rem minmax(0, 1fr) auto;
     align-items: baseline;
@@ -254,7 +240,23 @@
 
 @media (min-width: 900px) {
   .hero {
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.85fr);
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: start;
+  }
+
+  .hero__portrait {
+    order: 1;
+  }
+
+  .hero__body {
+    order: 2;
+  }
+
+  .hero-data {
+    order: 3;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    border: 0;
+    padding-block: var(--space-3) var(--space-4);
   }
 
   .closing {

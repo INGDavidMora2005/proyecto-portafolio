@@ -58,14 +58,20 @@ describe('Inicio', () => {
     }
   });
 
-  it('enlaza los CTAs con proyectos, perfil y contacto', () => {
+  it('enlaza los CTAs con proyectos y perfil en el hero', () => {
     const element = crear();
-    const enlaces = Array.from(element.querySelectorAll<HTMLAnchorElement>('.action'));
+    const enlaces = Array.from(element.querySelectorAll<HTMLAnchorElement>('.hero__actions .action'));
 
     expect(enlaces.map((enlace) => enlace.getAttribute('href'))).toEqual([
       '/proyectos',
       '/perfil',
-      '/contacto',
     ]);
+  });
+
+  it('enlaza con contacto en el cierre', () => {
+    const element = crear();
+    const enlace = element.querySelector<HTMLAnchorElement>('.closing .action--primary');
+
+    expect(enlace?.getAttribute('href')).toBe('/contacto');
   });
 });
