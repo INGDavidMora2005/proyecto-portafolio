@@ -1,0 +1,46 @@
+import { TestBed } from '@angular/core/testing';
+import { PERFIL } from '../../../../data/profile';
+import { IdentityFicha } from './identity-ficha';
+
+describe('IdentityFicha', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [IdentityFicha] }).compileComponents();
+  });
+
+  function crear(): HTMLElement {
+    const fixture = TestBed.createComponent(IdentityFicha);
+    fixture.componentRef.setInput('perfil', PERFIL);
+    fixture.detectChanges();
+    return fixture.nativeElement as HTMLElement;
+  }
+
+  it('muestra el monograma y el nombre del perfil', () => {
+    const element = crear();
+
+    expect(element.querySelector('.ficha__monogram-text')?.textContent?.trim()).toBe('DM');
+    expect(element.querySelector('.ficha__name')?.textContent).toContain(PERFIL.nombre);
+  });
+
+  it('muestra los datos clave en una lista de definición', () => {
+    const element = crear();
+    const datos = Array.from(element.querySelectorAll('.ficha__fact')).map((dato) => ({
+      etiqueta: dato.querySelector('dt')?.textContent?.trim(),
+      valor: dato.querySelector('dd')?.textContent?.trim(),
+    }));
+
+    expect(datos).toEqual(
+      PERFIL.datosClave.map((dato) => ({ etiqueta: dato.etiqueta, valor: dato.valor })),
+    );
+  });
+
+  it('muestra los idiomas con su nivel, incluido inglés B2', () => {
+    const element = crear();
+    const idiomas = Array.from(element.querySelectorAll('.ficha__language')).map((idioma) => ({
+      nombre: idioma.querySelector('dt')?.textContent?.trim(),
+      nivel: idioma.querySelector('dd')?.textContent?.trim(),
+    }));
+
+    expect(idiomas).toHaveLength(PERFIL.idiomas.length);
+    expect(idiomas).toContainEqual({ nombre: 'Inglés', nivel: 'B2' });
+  });
+});

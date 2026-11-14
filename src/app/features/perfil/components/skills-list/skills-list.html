@@ -1,0 +1,12 @@
+<ul class="skills" role="list">
+  @for (grupo of grupos(); track grupo.id) {
+    <li class="skill">
+      <p class="skill__label">{{ grupo.titulo }}</p>
+      <ul class="skill__chips" role="list">
+        @for (elemento of grupo.elementos; track elemento) {
+          <li><app-tech-chip [label]="elemento" /></li>
+        }
+      </ul>
+    </li>
+  }
+</ul>

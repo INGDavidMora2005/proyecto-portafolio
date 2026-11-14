@@ -1,0 +1,11 @@
+<ol class="principles">
+  @for (principio of principios(); track principio.titulo; let i = $index) {
+    <li class="principle">
+      <span class="principle__index">{{ i + 1 }}</span>
+      <div class="principle__body">
+        <h3 class="principle__title">{{ principio.titulo }}</h3>
+        <p class="principle__text">{{ principio.descripcion }}</p>
+      </div>
+    </li>
+  }
+</ol>
