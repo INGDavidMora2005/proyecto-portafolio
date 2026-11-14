@@ -2,41 +2,110 @@
   display: block;
 }
 
-.skills {
+.layers {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.layer {
   display: flex;
   flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--panel);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
 }
 
-.skill {
+.layer__head {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  padding-block: var(--space-4);
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
 }
 
-.skill + .skill {
-  border-top: 1px solid var(--rule);
-}
-
-.skill__label {
+.layer__index {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: var(--tracking-tight);
+}
+
+.layer__title {
+  font-size: var(--text-lg);
+  font-weight: 600;
   color: var(--ink);
 }
 
-.skill__chips {
+.layer__count {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--ink-faint);
+}
+
+.layer__chips {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Estados hover/focus — solo con pointer y sin reduced-motion */
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .layer:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-1);
+    transform: translateY(-2px);
+  }
+
+  .layer:hover .layer__title {
+    color: var(--accent);
+  }
+}
+
+.layer:focus-within {
+  border-color: var(--focus);
+  box-shadow: var(--shadow-1);
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.layer:focus-within .layer__title {
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer {
+    transition: none !important;
+    animation: none !important;
+  }
 }
 
 @media (min-width: 640px) {
-  .skill {
-    display: grid;
-    grid-template-columns: minmax(0, 9rem) minmax(0, 1fr);
-    gap: var(--space-4);
-    align-items: start;
+  .layers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .layer__head {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 1024px) {
+  .layers {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

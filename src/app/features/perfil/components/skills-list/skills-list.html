@@ -1,8 +1,12 @@
-<ul class="skills" role="list">
-  @for (grupo of grupos(); track grupo.id) {
-    <li class="skill">
-      <p class="skill__label">{{ grupo.titulo }}</p>
-      <ul class="skill__chips" role="list">
+<ul class="layers" role="list" aria-label="Grupos de habilidades">
+  @for (grupo of grupos(); track grupo.id; let i = $index) {
+    <li class="layer">
+      <div class="layer__head" [attr.data-index]="i + 1">
+        <span class="layer__index" aria-hidden="true">{{ i + 1 }}</span>
+        <h3 class="layer__title">{{ grupo.titulo }}</h3>
+        <span class="layer__count">{{ grupo.elementos.length }}</span>
+      </div>
+      <ul class="layer__chips" role="list">
         @for (elemento of grupo.elementos; track elemento) {
           <li><app-tech-chip [label]="elemento" /></li>
         }
