@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { CANALES, CORREO_CONTACTO } from '../../data/contact';
+import { CANALES, CORREO_CONTACTO, ENLACES_CORREO } from '../../data/contact';
 import { Contacto } from './contacto';
 
 describe('Contacto', () => {
@@ -31,9 +31,17 @@ describe('Contacto', () => {
     fixture.detectChanges();
   }
 
+  function pulsarEscribir(element: HTMLElement): void {
+    const enlace = element.querySelector<HTMLAnchorElement>('a[href^="mailto:"]');
+    enlace?.addEventListener('click', (evento) => evento.preventDefault(), { once: true });
+    enlace?.click();
+  }
+
   afterEach(() => {
+    vi.useRealTimers();
     Reflect.deleteProperty(navigator, 'clipboard');
     Reflect.deleteProperty(document, 'execCommand');
+    Reflect.deleteProperty(document, 'visibilityState');
     TestBed.resetTestingModule();
   });
 
@@ -50,13 +58,17 @@ describe('Contacto', () => {
     ).toEqual(CANALES.map((canal) => canal.valor));
   });
 
-  it('abre LinkedIn y GitHub en una pestaña nueva de forma segura', async () => {
+  it('abre LinkedIn, GitHub, Gmail y Outlook en una pestaña nueva de forma segura', async () => {
     const { element } = await crear();
     const enlaces = Array.from(element.querySelectorAll<HTMLAnchorElement>('.channel__action'));
     const externos = enlaces.filter((enlace) => enlace.target === '_blank');
 
-    expect(externos).toHaveLength(2);
-    expect(externos.map((enlace) => enlace.href)).toEqual([CANALES[0].url, CANALES[2].url]);
+    expect(externos.map((enlace) => enlace.href)).toEqual([
+      CANALES[0].url,
+      ENLACES_CORREO.gmail,
+      ENLACES_CORREO.outlook,
+      CANALES[2].url,
+    ]);
 
     for (const enlace of externos) {
       expect(enlace.rel).toBe('noopener noreferrer');
@@ -64,12 +76,75 @@ describe('Contacto', () => {
     }
   });
 
-  it('usa mailto para el correo visible', async () => {
+  it('usa el mailto con asunto y cuerpo para la acción de escribir', async () => {
     const { element } = await crear();
     const correo = element.querySelector<HTMLAnchorElement>('a[href^="mailto:"]');
 
     expect(correo).not.toBeNull();
-    expect(correo?.getAttribute('href')).toBe(`mailto:${CORREO_CONTACTO}`);
+    expect(correo?.getAttribute('href')).toBe(ENLACES_CORREO.mailto);
+    expect(correo?.textContent).toContain('Escribirme');
+  });
+
+  it('ofrece Gmail y Outlook como alternativas visibles', async () => {
+    const { element } = await crear();
+    const gmail = element.querySelector<HTMLAnchorElement>('a[href^="https://mail.google.com/"]');
+    const outlook = element.querySelector<HTMLAnchorElement>(
+      'a[href^="https://outlook.live.com/"]',
+    );
+
+    expect(gmail?.textContent).toContain('Abrir en Gmail');
+    expect(outlook?.textContent).toContain('Abrir en Outlook');
+  });
+
+  it('muestra la ayuda si el mailto no cambia el foco ni la visibilidad en 1,5 s', async () => {
+    const { fixture, element } = await crear();
+    vi.useFakeTimers();
+
+    pulsarEscribir(element);
+    vi.advanceTimersByTime(1500);
+    fixture.detectChanges();
+
+    expect(element.querySelector('.channel__help')?.textContent).toContain(
+      'Si no se abrió tu app de correo',
+    );
+
+    vi.useRealTimers();
+  });
+
+  it('no muestra la ayuda si la página pierde el foco', async () => {
+    const { fixture, element } = await crear();
+    vi.useFakeTimers();
+
+    pulsarEscribir(element);
+    window.dispatchEvent(new Event('blur'));
+    vi.advanceTimersByTime(1500);
+    fixture.detectChanges();
+
+    expect(element.querySelector('.channel__help')?.textContent).not.toContain(
+      'Si no se abrió tu app de correo',
+    );
+
+    vi.useRealTimers();
+  });
+
+  it('no muestra la ayuda si la página se oculta', async () => {
+    const { fixture, element } = await crear();
+    vi.useFakeTimers();
+    Object.defineProperty(document, 'visibilityState', {
+      configurable: true,
+      value: 'hidden',
+    });
+
+    pulsarEscribir(element);
+    document.dispatchEvent(new Event('visibilitychange'));
+    vi.advanceTimersByTime(1500);
+    fixture.detectChanges();
+
+    expect(element.querySelector('.channel__help')?.textContent).not.toContain(
+      'Si no se abrió tu app de correo',
+    );
+
+    vi.useRealTimers();
   });
 
   it('copia el correo con la Clipboard API y anuncia la confirmación', async () => {
@@ -80,7 +155,7 @@ describe('Contacto', () => {
     await pulsarCopiar(fixture, element);
 
     expect(writeText).toHaveBeenCalledWith(CORREO_CONTACTO);
-    expect(element.querySelector('[role="status"]')?.textContent).toContain(
+    expect(element.querySelector('.contact__status')?.textContent).toContain(
       'Correo copiado al portapapeles',
     );
   });
@@ -96,7 +171,7 @@ describe('Contacto', () => {
 
     await pulsarCopiar(fixture, element);
 
-    expect(element.querySelector('[role="status"]')?.textContent).toContain(
+    expect(element.querySelector('.contact__status')?.textContent).toContain(
       'Correo copiado al portapapeles',
     );
   });
@@ -115,7 +190,7 @@ describe('Contacto', () => {
 
     await pulsarCopiar(fixture, element);
 
-    const estado = element.querySelector('[role="status"]');
+    const estado = element.querySelector('.contact__status');
     expect(estado?.textContent).toContain('No se pudo copiar automáticamente');
     expect(estado?.textContent).toContain(CORREO_CONTACTO);
     expect(element.querySelector('.channel__action--copy')).not.toBeNull();
