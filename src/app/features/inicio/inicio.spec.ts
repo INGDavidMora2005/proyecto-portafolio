@@ -26,20 +26,6 @@ describe('Inicio', () => {
     expect(element.querySelector('.hero__role')?.textContent).toContain(PERFIL.titular);
   });
 
-  it('calcula las cifras desde los datos reales', () => {
-    const element = crear();
-    const tecnologias = new Set(PROJECTS.flatMap((proyecto) => proyecto.tecnologias));
-    const cifras = Array.from(element.querySelectorAll('.stat')).map((stat) => ({
-      etiqueta: stat.querySelector('dt')?.textContent?.trim(),
-      valor: stat.querySelector('dd')?.textContent?.trim(),
-    }));
-
-    expect(cifras).toEqual([
-      { etiqueta: 'proyectos en el catálogo', valor: String(PROJECTS.length) },
-      { etiqueta: 'tecnologías distintas', valor: String(tecnologias.size) },
-    ]);
-  });
-
   it('lista los cinco proyectos con enlace a su ficha', () => {
     const element = crear();
     const filas = Array.from(element.querySelectorAll('.project-row'));

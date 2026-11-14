@@ -9,7 +9,7 @@ Portafolio digital individual de **David Mora Duque**, estudiante de Ingeniería
 ## Funcionalidades
 
 - **Perfil profesional**: identidad, presentación, datos clave, habilidades, idiomas y principios de trabajo.
-- **Inicio**: hero con identidad y presentación, cifras calculadas desde los datos reales del catálogo, lista compacta de proyectos y cierre con llamada a contacto.
+- **Inicio**: hero con identidad y presentación, lista compacta de proyectos y cierre con llamada a contacto.
 - **Catálogo de proyectos**: las cinco fichas del portafolio con filtro por categoría.
 - **Detalle de proyecto**: información, tecnologías, características y navegación anterior/siguiente.
 - **Contacto**: canales de LinkedIn, correo y GitHub, con copia del correo al portapapeles.

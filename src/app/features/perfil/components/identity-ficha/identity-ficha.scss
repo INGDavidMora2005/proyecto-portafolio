@@ -14,20 +14,6 @@
   width: 100%;
 }
 
-.ficha__fig {
-  position: absolute;
-  top: var(--space-3);
-  right: var(--space-3);
-  z-index: 10;
-  padding: 0 var(--space-2);
-  background: var(--panel);
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: var(--text-2xs);
-  letter-spacing: var(--tracking-wide);
-  pointer-events: none;
-}
-
 .ficha__portrait {
   width: 100%;
   aspect-ratio: 1 / 1;

@@ -25,26 +25,6 @@
     />
   </header>
 
-  <aside class="hero-data" aria-label="Datos del perfil y cifras">
-    <dl class="hero-facts" aria-label="Datos del perfil">
-      @for (dato of perfil.datosClave; track dato.etiqueta) {
-        <div class="hero-fact">
-          <dt>{{ dato.etiqueta }}</dt>
-          <dd>{{ dato.valor }}</dd>
-        </div>
-      }
-    </dl>
-
-    <dl class="stats" aria-label="Cifras del catálogo">
-      @for (cifra of cifrasAnimadas(); track cifra.id) {
-        <div class="stat">
-          <dt class="stat__label">{{ cifra.etiqueta }}</dt>
-          <dd class="stat__value" [class.stat__value--animado]="cifra.animada" [attr.data-cifra]="cifra.id">{{ cifra.valorMostrado }}</dd>
-        </div>
-      }
-    </dl>
-  </aside>
-
   <section class="home__block" aria-labelledby="inicio-proyectos-title">
     <app-section-header
       headingId="inicio-proyectos-title"
