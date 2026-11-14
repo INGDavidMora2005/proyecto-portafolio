@@ -31,7 +31,10 @@ describe('PROJECTS', () => {
     }
   });
 
-  it('usa URLs https válidas para repositorio y aplicación', () => {
+  it('usa URLs https válidas para las diez URLs del catálogo', () => {
+    const urls = PROJECTS.flatMap((project) => [project.repoUrl, project.demoUrl]);
+
+    expect(urls).toHaveLength(PROJECTS.length * 2);
     for (const project of PROJECTS) {
       const repo = new URL(project.repoUrl);
       const demo = new URL(project.demoUrl);
