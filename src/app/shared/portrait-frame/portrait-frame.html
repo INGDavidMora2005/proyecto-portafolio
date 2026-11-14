@@ -6,15 +6,15 @@
       [sizes]="sizes()"
     />
     <img
-      [width]="width()"
-      [height]="height()"
+      [attr.width]="null"
+      [attr.height]="null"
       [attr.loading]="loading()"
       [attr.fetchpriority]="fetchpriority()"
       [decoding]="'async'"
       [src]="src()"
       [alt]="alt()"
       [sizes]="sizes()"
-      [style.object-position]="objectPosition()"
+      [style.--portrait-object-position]="objectPosition()"
       (error)="onError()"
       (load)="onLoad()"
     />

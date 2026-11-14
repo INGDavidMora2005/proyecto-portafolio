@@ -27,8 +27,6 @@ describe('PortraitFrame', () => {
     expect(source?.getAttribute('srcset')).toContain('images/perfil-400.webp 400w');
     expect(source?.getAttribute('srcset')).toContain('images/perfil-800.webp 800w');
     expect(img).not.toBeNull();
-    expect(img?.getAttribute('width')).toBe('800');
-    expect(img?.getAttribute('height')).toBe('1000');
     expect(img?.getAttribute('alt')).toBe('Retrato de David Mora Duque');
     expect(img?.getAttribute('loading')).toBe('lazy');
     expect(img?.getAttribute('fetchpriority')).toBe('low');
@@ -42,11 +40,12 @@ describe('PortraitFrame', () => {
     expect(img?.getAttribute('fetchpriority')).toBe('high');
   });
 
-  it('usa object-position personalizado en el estilo del img', async () => {
+  it('usa object-position personalizado en la variable CSS', async () => {
     const fixture = await crear({ objectPosition: '30% 60%' });
-    const img = fixture.nativeElement.querySelector('img');
+    const element = fixture.nativeElement as HTMLElement;
+    const img = element.querySelector('img')!;
 
-    expect(img?.style.objectPosition).toBe('30% 60%');
+    expect(img.style.getPropertyValue('--portrait-object-position')).toBe('30% 60%');
   });
 
   it('muestra el fallback DM cuando la imagen falla', async () => {
