@@ -110,6 +110,24 @@
   color: var(--accent);
 }
 
+.channel__action--secondary {
+  border-color: var(--rule);
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.channel__help {
+  margin: 0;
+  color: var(--warn);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: var(--leading-relaxed);
+}
+
+.channel__help--visible {
+  margin-top: var(--space-2);
+}
+
 .contact__status {
   min-height: 1.25rem;
   color: var(--ok);

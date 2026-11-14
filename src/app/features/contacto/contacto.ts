@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
-import { CANALES, CORREO_CONTACTO, type Canal } from '../../data/contact';
+import { ChangeDetectionStrategy, Component, computed, OnDestroy, signal } from '@angular/core';
+import { CANALES, CORREO_CONTACTO, ENLACES_CORREO, type Canal } from '../../data/contact';
 import { SectionHeader } from '../../shared/section-header/section-header';
 
 type EstadoCopia = 'inicial' | 'exito' | 'error';
+
+const ESPERA_AYUDA_CORREO_MS = 1500;
 
 @Component({
   selector: 'app-contacto',
@@ -11,9 +13,15 @@ type EstadoCopia = 'inicial' | 'exito' | 'error';
   styleUrl: './contacto.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Contacto {
+export class Contacto implements OnDestroy {
   protected readonly canales = CANALES;
+  protected readonly enlacesCorreo = ENLACES_CORREO;
   protected readonly estado = signal<EstadoCopia>('inicial');
+  protected readonly ayudaCorreo = signal(false);
+
+  private temporizadorAyuda: ReturnType<typeof setTimeout> | null = null;
+  private alPerderFoco: (() => void) | null = null;
+  private alCambiarVisibilidad: (() => void) | null = null;
 
   protected readonly estadoTexto = computed(() => {
     switch (this.estado()) {
@@ -26,13 +34,54 @@ export class Contacto {
     }
   });
 
+  ngOnDestroy(): void {
+    this.limpiarAyuda();
+  }
+
   protected esExterno(canal: Canal): boolean {
     return canal.tipo !== 'correo';
+  }
+
+  protected prepararAyudaCorreo(): void {
+    this.limpiarAyuda();
+    this.ayudaCorreo.set(false);
+
+    this.alPerderFoco = () => this.limpiarAyuda();
+    this.alCambiarVisibilidad = () => {
+      if (document.visibilityState === 'hidden') {
+        this.limpiarAyuda();
+      }
+    };
+
+    window.addEventListener('blur', this.alPerderFoco, { once: true });
+    document.addEventListener('visibilitychange', this.alCambiarVisibilidad);
+
+    this.temporizadorAyuda = setTimeout(() => {
+      this.limpiarAyuda();
+      this.ayudaCorreo.set(true);
+    }, ESPERA_AYUDA_CORREO_MS);
   }
 
   protected async copiarCorreo(): Promise<void> {
     const copiado = await this.escribirEnPortapapeles();
     this.estado.set(copiado ? 'exito' : 'error');
+  }
+
+  private limpiarAyuda(): void {
+    if (this.temporizadorAyuda !== null) {
+      clearTimeout(this.temporizadorAyuda);
+      this.temporizadorAyuda = null;
+    }
+
+    if (this.alPerderFoco) {
+      window.removeEventListener('blur', this.alPerderFoco);
+      this.alPerderFoco = null;
+    }
+
+    if (this.alCambiarVisibilidad) {
+      document.removeEventListener('visibilitychange', this.alCambiarVisibilidad);
+      this.alCambiarVisibilidad = null;
+    }
   }
 
   private async escribirEnPortapapeles(): Promise<boolean> {

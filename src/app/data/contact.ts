@@ -8,7 +8,34 @@ export interface Canal {
   readonly tipo: TipoCanal;
 }
 
+export interface EnlacesCorreo {
+  readonly mailto: string;
+  readonly gmail: string;
+  readonly outlook: string;
+}
+
 export const CORREO_CONTACTO = 'davinchoo2026@gmail.com';
+export const ASUNTO_CORREO = 'Contacto desde el portafolio';
+export const CUERPO_CORREO =
+  'Hola David:\n\nTe escribo desde tu portafolio. Me gustaría ponerme en contacto contigo sobre lo siguiente:\n\n';
+
+export function construirEnlacesCorreo(
+  destinatario: string = CORREO_CONTACTO,
+  asunto: string = ASUNTO_CORREO,
+  cuerpo: string = CUERPO_CORREO,
+): EnlacesCorreo {
+  const destinatarioCodificado = encodeURIComponent(destinatario);
+  const asuntoCodificado = encodeURIComponent(asunto);
+  const cuerpoCodificado = encodeURIComponent(cuerpo);
+
+  return {
+    mailto: `mailto:${destinatario}?subject=${asuntoCodificado}&body=${cuerpoCodificado}`,
+    gmail: `https://mail.google.com/mail/?view=cm&fs=1&to=${destinatarioCodificado}&su=${asuntoCodificado}&body=${cuerpoCodificado}`,
+    outlook: `https://outlook.live.com/mail/0/deeplink/compose?to=${destinatarioCodificado}&subject=${asuntoCodificado}&body=${cuerpoCodificado}`,
+  };
+}
+
+export const ENLACES_CORREO = construirEnlacesCorreo();
 
 export const CANALES: readonly Canal[] = [
   {
@@ -22,7 +49,7 @@ export const CANALES: readonly Canal[] = [
     id: 'correo',
     etiqueta: 'Correo',
     valor: CORREO_CONTACTO,
-    url: `mailto:${CORREO_CONTACTO}`,
+    url: ENLACES_CORREO.mailto,
     tipo: 'correo',
   },
   {
