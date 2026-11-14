@@ -1,0 +1,165 @@
+:host {
+  display: block;
+}
+
+.portrait {
+  position: relative;
+  display: inline-grid;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--panel);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.portrait > picture,
+.portrait > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  object-fit: cover;
+  object-position: 50% 38%;
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+  will-change: transform;
+}
+
+.portrait > img {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.portrait--loading > img {
+  opacity: 0;
+}
+
+.portrait--error > img {
+  display: none;
+}
+
+.portrait__fallback {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background: var(--paper);
+  color: var(--ink-faint);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 6vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.05em;
+}
+
+/* --- Marco de lámina técnica --- */
+
+.portrait__frame {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.portrait__mark {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--rule-strong);
+  background: var(--panel);
+}
+
+.portrait__mark--tl {
+  top: var(--space-2);
+  left: var(--space-2);
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.portrait__mark--tr {
+  top: var(--space-2);
+  right: var(--space-2);
+  border-left: 0;
+  border-bottom: 0;
+}
+
+.portrait__mark--bl {
+  bottom: var(--space-2);
+  left: var(--space-2);
+  border-right: 0;
+  border-top: 0;
+}
+
+.portrait__mark--br {
+  bottom: var(--space-2);
+  right: var(--space-2);
+  border-left: 0;
+  border-top: 0;
+}
+
+.portrait__edge {
+  position: absolute;
+  top: calc(var(--space-2) * -1);
+  left: calc(var(--space-2) * -1);
+  right: calc(var(--space-2) * -1);
+  bottom: calc(var(--space-2) * -1);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--accent);
+  transform: translate(2px, 2px);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.portrait__label {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 4;
+  padding: 0 var(--space-2);
+  background: var(--panel);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* --- Interacción sutil solo con hover y sin reduced-motion --- */
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .portrait:hover > img {
+    transform: scale(1.02) rotate(0.5deg);
+  }
+
+  .portrait:hover .portrait__edge {
+    transform: translate(3px, 3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait > img,
+  .portrait__edge {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (min-width: 640px) {
+  .portrait__mark {
+    width: 14px;
+    height: 14px;
+  }
+
+  .portrait__label {
+    font-size: var(--text-xs);
+    padding: 0 var(--space-3);
+  }
+}
