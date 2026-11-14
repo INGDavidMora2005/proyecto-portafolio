@@ -15,6 +15,18 @@
           }
         </div>
       </section>
+
+      <section class="profile__block" aria-labelledby="idiomas-title">
+        <app-section-header headingId="idiomas-title" index="02.1.1" title="Idiomas" />
+        <dl class="languages">
+          @for (idioma of perfil.idiomas; track idioma.nombre) {
+            <div class="language">
+              <dt class="language__name">{{ idioma.nombre }}</dt>
+              <dd class="language__level">{{ idioma.nivel }}</dd>
+            </div>
+          }
+        </dl>
+      </section>
     </div>
   </div>
 

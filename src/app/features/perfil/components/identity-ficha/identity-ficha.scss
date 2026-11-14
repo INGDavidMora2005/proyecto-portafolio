@@ -5,50 +5,37 @@
 .ficha {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  padding: var(--space-5);
   border: 1px solid var(--rule);
-  border-left: 3px solid var(--accent);
   background: var(--panel);
 }
 
-.ficha__monogram {
+.ficha__portrait-wrapper {
   position: relative;
-  display: grid;
-  place-items: center;
-  width: clamp(4rem, 13vw, 6rem);
-  aspect-ratio: 1;
-  overflow: hidden;
-  border: 1px solid var(--rule-strong);
-  background: var(--paper);
+  width: 100%;
 }
 
-.ficha__monogram::before {
+.ficha__fig {
   position: absolute;
-  right: -18%;
-  bottom: -18%;
-  width: 80%;
-  height: 1px;
-  background: var(--accent);
-  transform: rotate(-45deg);
-  content: '';
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 10;
+  padding: 0 var(--space-2);
+  background: var(--panel);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-wide);
+  pointer-events: none;
 }
 
-.ficha__monogram::after {
-  position: absolute;
-  right: var(--space-2);
-  bottom: var(--space-2);
-  width: 6px;
-  height: 6px;
-  background: var(--accent);
-  content: '';
+.ficha__portrait {
+  width: 100%;
+  aspect-ratio: 1 / 1;
 }
 
-.ficha__monogram-text {
-  font-family: var(--font-display);
-  font-size: clamp(1.9rem, 6vw, 2.6rem);
-  font-weight: 600;
-  letter-spacing: -0.05em;
+.ficha__body {
+  padding: var(--space-5);
+  border-left: 3px solid var(--accent);
 }
 
 .ficha__name {
@@ -79,26 +66,4 @@
 .ficha__fact dd {
   margin-top: 0.15rem;
   font-size: var(--text-sm);
-}
-
-.ficha__languages {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  margin-top: var(--space-4);
-}
-
-.ficha__language + .ficha__language {
-  border-top: 1px solid var(--rule);
-}
-
-.ficha__language dt {
-  font-size: var(--text-lg);
-  font-weight: 500;
-}
-
-.ficha__language dd {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--accent);
 }

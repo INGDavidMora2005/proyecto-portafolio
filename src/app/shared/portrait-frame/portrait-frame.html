@@ -1,0 +1,35 @@
+<figure class="portrait" [class.portrait--error]="fallo" [class.portrait--loading]="cargando" [attr.data-object-position]="objectPosition()">
+  <picture>
+    <source
+      type="image/webp"
+      [srcset]="['images/perfil-400.webp 400w', 'images/perfil-800.webp 800w'].join(', ')"
+      [sizes]="sizes()"
+    />
+    <img
+      [attr.width]="null"
+      [attr.height]="null"
+      [attr.loading]="loading()"
+      [attr.fetchpriority]="fetchpriority()"
+      [decoding]="'async'"
+      [src]="src()"
+      [alt]="alt()"
+      [sizes]="sizes()"
+      [style.--portrait-object-position]="objectPosition()"
+      (error)="onError()"
+      (load)="onLoad()"
+    />
+  </picture>
+
+  @if (fallo) {
+    <div class="portrait__fallback" aria-hidden="true">DM</div>
+  }
+
+  <div class="portrait__frame">
+    <span class="portrait__mark portrait__mark--tl" aria-hidden="true"></span>
+    <span class="portrait__mark portrait__mark--tr" aria-hidden="true"></span>
+    <span class="portrait__mark portrait__mark--bl" aria-hidden="true"></span>
+    <span class="portrait__mark portrait__mark--br" aria-hidden="true"></span>
+    <span class="portrait__edge" aria-hidden="true"></span>
+    <span class="portrait__label">FIG. 01</span>
+  </div>
+</figure>

@@ -14,27 +14,36 @@
       </div>
     </div>
 
-    <aside class="stamp" aria-label="Datos del perfil">
-      <p class="stamp__monogram" aria-hidden="true">DM</p>
-      <dl class="stamp__facts">
-        @for (dato of perfil.datosClave; track dato.etiqueta) {
-          <div class="stamp__fact">
-            <dt>{{ dato.etiqueta }}</dt>
-            <dd>{{ dato.valor }}</dd>
-          </div>
-        }
-      </dl>
-    </aside>
+    <app-portrait-frame
+      class="hero__portrait"
+      [src]="'images/perfil-800.webp'"
+      [alt]="'Retrato de David Mora Duque'"
+      [loading]="'eager'"
+      [fetchpriority]="'high'"
+      [sizes]="'(min-width: 1024px) 420px, (min-width: 640px) 320px, 92vw'"
+      [objectPosition]="'50% 40%'"
+    />
   </header>
 
-  <dl class="stats" aria-label="Cifras del catálogo">
-    @for (cifra of cifras(); track cifra.id) {
-      <div class="stat">
-        <dt class="stat__label">{{ cifra.etiqueta }}</dt>
-        <dd class="stat__value">{{ cifra.valor }}</dd>
-      </div>
-    }
-  </dl>
+  <aside class="hero-data" aria-label="Datos del perfil y cifras">
+    <dl class="hero-facts" aria-label="Datos del perfil">
+      @for (dato of perfil.datosClave; track dato.etiqueta) {
+        <div class="hero-fact">
+          <dt>{{ dato.etiqueta }}</dt>
+          <dd>{{ dato.valor }}</dd>
+        </div>
+      }
+    </dl>
+
+    <dl class="stats" aria-label="Cifras del catálogo">
+      @for (cifra of cifrasAnimadas(); track cifra.id) {
+        <div class="stat">
+          <dt class="stat__label">{{ cifra.etiqueta }}</dt>
+          <dd class="stat__value" [class.stat__value--animado]="cifra.animada" [attr.data-cifra]="cifra.id">{{ cifra.valorMostrado }}</dd>
+        </div>
+      }
+    </dl>
+  </aside>
 
   <section class="home__block" aria-labelledby="inicio-proyectos-title">
     <app-section-header
@@ -74,6 +83,6 @@
         Escríbeme por correo o encuéntrame en LinkedIn y GitHub; están todos mis canales.
       </p>
     </div>
-    <a class="action action--primary" routerLink="/contacto">Ir a contacto</a>
+    <a class="action action--primary" routerLink="/contacto">Ponerse en contacto</a>
   </section>
 </section>
