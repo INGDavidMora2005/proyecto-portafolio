@@ -329,6 +329,49 @@ p {
   box-shadow: 0 0 0 3px var(--paper);
 }
 
+/* Botones de acción reutilizables */
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  padding-inline: var(--space-5);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-align: center;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+
+.action svg {
+  flex: none;
+}
+
+.action:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.action--primary {
+  border-color: transparent;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.action--primary:hover {
+  border-color: transparent;
+  background: var(--accent);
+  color: var(--accent-ink);
+  opacity: 0.88;
+}
+
 .page {
   padding-block: var(--space-8) var(--space-9);
 }

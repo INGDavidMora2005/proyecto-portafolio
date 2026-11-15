@@ -70,30 +70,6 @@
   margin-top: var(--space-5);
 }
 
-.action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding-inline: var(--space-5);
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius-sm);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  transition: all var(--dur-fast) var(--ease-out);
-}
-
-.action:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.action--primary {
-  border-color: transparent;
-  background: var(--accent);
-  color: var(--accent-ink);
-}
-
 .hero__portrait {
   width: clamp(240px, 35vw, 420px);
   aspect-ratio: 4 / 5;
