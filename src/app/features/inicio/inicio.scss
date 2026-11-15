@@ -14,7 +14,7 @@
 .hero {
   display: grid;
   gap: var(--space-6);
-  padding-bottom: var(--space-6);
+  padding-bottom: var(--space-8);
   border-bottom: 1px solid var(--rule);
 }
 
@@ -41,11 +41,19 @@
 }
 
 .hero__role {
-  max-width: 32ch;
+  max-width: 40ch;
   margin-top: var(--space-3);
   color: var(--ink-soft);
   font-size: var(--text-lg);
   text-wrap: balance;
+}
+
+.hero__enfoque {
+  max-width: 46ch;
+  margin-top: var(--space-2);
+  color: var(--ink-soft);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
 }
 
 .hero__lead {
@@ -167,8 +175,9 @@
 
 @media (min-width: 900px) {
   .hero {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    align-items: start;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: center;
   }
 
   .hero__portrait {

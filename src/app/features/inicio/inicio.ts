@@ -18,6 +18,8 @@ export class Inicio {
 
   protected readonly perfil = PERFIL;
   protected readonly presentacion = PERFIL.presentacion[1];
+  protected readonly rol = PERFIL.titular.split(' · ')[0];
+  protected readonly enfoque = PERFIL.titular.split(' · ')[1];
 
   protected readonly proyectos = computed(() =>
     this.projectsService.projects().map((proyecto) => ({

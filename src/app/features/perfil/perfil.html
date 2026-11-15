@@ -1,10 +1,12 @@
 <section class="profile" aria-labelledby="perfil-title">
   <app-section-header headingId="perfil-title" title="Perfil" [level]="1" />
 
-  <div class="profile__top">
-    <app-identity-ficha class="profile__top__ficha" [perfil]="perfil" />
+  <div class="profile__body">
+    <div class="profile__aside">
+      <app-identity-ficha [perfil]="perfil" />
+    </div>
 
-    <div class="profile__top__main">
+    <div class="profile__main">
       <p class="profile__lead">{{ perfil.titular }}</p>
 
       <section class="profile__block" aria-labelledby="presentacion-title">
@@ -27,22 +29,22 @@
           }
         </dl>
       </section>
+
+      <section class="profile__block" aria-labelledby="habilidades-title">
+        <app-section-header
+          headingId="habilidades-title"
+          title="Habilidades"
+          description="Tecnologías y prácticas con las que construyo y despliego aplicaciones."
+        />
+        <app-skills-list [grupos]="perfil.habilidades" />
+      </section>
+
+      <section class="profile__block" aria-labelledby="principios-title">
+        <app-section-header headingId="principios-title" title="Cómo trabajo" />
+        <app-principles [principios]="perfil.principios" />
+      </section>
     </div>
   </div>
-
-  <section class="profile__block" aria-labelledby="habilidades-title">
-    <app-section-header
-      headingId="habilidades-title"
-      title="Habilidades"
-      description="Tecnologías y prácticas con las que construyo y despliego aplicaciones."
-    />
-    <app-skills-list [grupos]="perfil.habilidades" />
-  </section>
-
-  <section class="profile__block" aria-labelledby="principios-title">
-    <app-section-header headingId="principios-title" title="Cómo trabajo" />
-    <app-principles [principios]="perfil.principios" />
-  </section>
 
   <div class="profile__cta">
     <a class="cta-link cta-link--primary" routerLink="/proyectos">Ver proyectos</a>

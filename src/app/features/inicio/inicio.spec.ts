@@ -18,12 +18,14 @@ describe('Inicio', () => {
     return fixture.nativeElement as HTMLElement;
   }
 
-  it('muestra el nombre y el titular del perfil con un único h1', () => {
+  it('muestra el nombre y el titular dividido en rol y enfoque con un único h1', () => {
     const element = crear();
+    const [rol, enfoque] = PERFIL.titular.split(' · ');
 
     expect(element.querySelectorAll('h1')).toHaveLength(1);
     expect(element.querySelector('h1')?.textContent).toContain(PERFIL.nombre);
-    expect(element.querySelector('.hero__role')?.textContent).toContain(PERFIL.titular);
+    expect(element.querySelector('.hero__role')?.textContent?.trim()).toBe(rol);
+    expect(element.querySelector('.hero__enfoque')?.textContent?.trim()).toBe(enfoque);
   });
 
   it('lista los cinco proyectos con enlace a su ficha', () => {
