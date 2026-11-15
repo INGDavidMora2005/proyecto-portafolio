@@ -56,7 +56,7 @@ export const PERFIL: Perfil = {
     {
       id: 'frontend',
       titulo: 'Frontend',
-      elementos: ['Angular (standalone, Module Federation)', 'Astro', 'Flutter'],
+      elementos: ['Angular', 'Astro', 'Flutter'],
     },
     {
       id: 'backend',
