@@ -74,7 +74,7 @@
 
 .catalog__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
 }
 
@@ -122,6 +122,32 @@
 .catalog__reset:hover {
   background: var(--accent-soft);
   color: var(--accent);
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .catalog__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Con un número impar de tarjetas, la última ocupa la fila completa. */
+  .catalog__item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .catalog__grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  /* 3 + 2 sin huecos: las tres primeras ocupan 2 columnas y las dos últimas, 3. */
+  .catalog__item:nth-child(-n + 3) {
+    grid-column: span 2;
+  }
+
+  .catalog__item:nth-child(n + 4) {
+    grid-column: span 3;
+  }
 }
 
 @media (max-width: 560px) {

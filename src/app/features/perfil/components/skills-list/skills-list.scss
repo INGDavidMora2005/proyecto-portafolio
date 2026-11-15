@@ -4,6 +4,7 @@
 
 .layers {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-3);
   margin: 0;
   padding: 0;
@@ -86,9 +87,14 @@
   }
 }
 
-@media (min-width: 640px) {
+@media (min-width: 640px) and (max-width: 1023px) {
   .layers {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Con un número impar de tarjetas, la última ocupa la fila completa. */
+  .layer:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 
   .layer__head {
@@ -98,6 +104,15 @@
 
 @media (min-width: 1024px) {
   .layers {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  /* 3 + 2 sin huecos: las tres primeras ocupan 2 columnas y las dos últimas, 3. */
+  .layer:nth-child(-n + 3) {
+    grid-column: span 2;
+  }
+
+  .layer:nth-child(n + 4) {
+    grid-column: span 3;
   }
 }
