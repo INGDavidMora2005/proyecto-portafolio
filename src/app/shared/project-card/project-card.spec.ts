@@ -45,7 +45,7 @@ describe('ProjectCard', () => {
   it('abre repositorio y aplicación en una pestaña nueva de forma segura', () => {
     const { element } = crear();
     const enlaces = Array.from(
-      element.querySelectorAll<HTMLAnchorElement>('.project-card__action'),
+      element.querySelectorAll<HTMLAnchorElement>('.project-card__actions a'),
     );
 
     expect(enlaces).toHaveLength(2);
@@ -55,7 +55,12 @@ describe('ProjectCard', () => {
     for (const enlace of enlaces) {
       expect(enlace.target).toBe('_blank');
       expect(enlace.rel).toBe('noopener noreferrer');
-      expect(enlace.textContent).toContain('se abre en una pestaña nueva');
+      expect(enlace.getAttribute('aria-label')).toContain('se abre en una pestaña nueva');
+      expect(enlace.classList).toContain('action');
+      expect(enlace.querySelector('svg')).not.toBeNull();
     }
+
+    expect(enlaces[0].classList).not.toContain('action--primary');
+    expect(enlaces[1].classList).toContain('action--primary');
   });
 });

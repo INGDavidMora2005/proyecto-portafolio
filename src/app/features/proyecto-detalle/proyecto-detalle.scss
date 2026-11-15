@@ -66,36 +66,6 @@
   gap: var(--space-3);
 }
 
-.detail__action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding-inline: var(--space-5);
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius-sm);
-  font-size: var(--text-sm);
-  font-weight: 600;
-}
-
-.detail__action:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
-.detail__action--primary {
-  border-color: transparent;
-  background: var(--accent);
-  color: var(--accent-ink);
-}
-
-.detail__action--primary:hover {
-  background: var(--accent);
-  color: var(--accent-ink);
-  opacity: 0.88;
-}
-
 .detail__description {
   max-width: 72ch;
   color: var(--ink-soft);
